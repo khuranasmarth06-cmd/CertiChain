@@ -4,6 +4,7 @@ import StatusBadge from "../components/StatusBadge";
 import { certificates }
 from "../data/certificates";
 import "../styles/Verify.css";
+import { QRCodeCanvas } from "qrcode.react";
 function Verify() {
   const [tokenId, setTokenId] = useState("");
   const [certificate, setCertificate] = useState(null);
@@ -87,10 +88,15 @@ function Verify() {
               }
             </p>
             <StatusBadge
-              status={
-                certificate.status
-              }
+             status={certificate.status}
             />
+            <div className="qr-section">
+                <h3>Verification QR</h3>
+                <QRCodeCanvas
+                  value={`http://localhost:5173/verify?tokenId=${certificate.tokenId}`}
+                  size={150}
+                 />
+            </div>
           </div>
         )}
       </div>

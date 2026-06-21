@@ -60,3 +60,9 @@
   padding: 8px 14px;
   border-radius: 6px;
 }
+.dashboard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}

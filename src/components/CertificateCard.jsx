@@ -1,5 +1,10 @@
 import StatusBadge from "./StatusBadge";
 function CertificateCard({ certificate }) {
+    const copyLink = () => {
+         const url =`http://localhost:5173/verify?tokenId=${certificate.tokenId}`;
+         navigator.clipboard.writeText(url);
+         alert("Verification link copied!");
+    };
   return (
     <div className="certificate-card">
       <div className="certificate-header">
@@ -26,6 +31,9 @@ function CertificateCard({ certificate }) {
           {certificate.tokenId}
         </p>
       </div>
+      <button onClick={copyLink}>
+         Copy Verification Link
+      </button>
     </div>
   );
 }

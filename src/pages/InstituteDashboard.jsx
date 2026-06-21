@@ -2,15 +2,17 @@ import Navbar from "../components/Navbar";
 import CertificateTable from "../components/CertificateTable";
 import { certificates } from "../data/certificates";
 import "../styles/Dashboard.css";
+import WalletConnect from "../components/WalletConnect";
 function InstituteDashboard() {
   return (
     <>
       <Navbar />
       <div className="dashboard">
         <div className="dashboard-header">
-          <h1>
-            Institute Dashboard
-          </h1>
+            <div className="dashboard-top">
+                <h1>Institute Dashboard</h1>
+                <WalletConnect />
+            </div>
           <p>
             Issue and manage certificates.
           </p>

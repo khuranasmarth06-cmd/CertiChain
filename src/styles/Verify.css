@@ -33,3 +33,10 @@
 .verify-result p {
   margin: 12px 0;
 }
+.qr-section {
+  margin-top: 25px;
+  text-align: center;
+}
+.qr-section h3 {
+  margin-bottom: 15px;
+}

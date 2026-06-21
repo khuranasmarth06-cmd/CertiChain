@@ -73,3 +73,11 @@ button{
   background: #fef3c7;
   color: #92400e;
 }
+.wallet-btn {
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}

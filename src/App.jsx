@@ -9,6 +9,7 @@ import CompanyLogin from "./pages/CompanyLogin";
 import CompanySignup from "./pages/CompanySignup";
 import StudentLogin from "./pages/StudentLogin";
 import StudentSignup from "./pages/StudentSignup";
+import NotFound from "./pages/NotFound";
 function App() {
   return (
     <BrowserRouter>
@@ -53,6 +54,7 @@ function App() {
          path="/student/signup"
          element={<StudentSignup />}
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
