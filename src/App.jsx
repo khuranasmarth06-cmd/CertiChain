@@ -3,6 +3,12 @@ import StudentDashboard from "./pages/StudentDashboard";
 import Home from "./pages/Home";
 import Verify from "./pages/Verify";
 import InstituteDashboard from "./pages/InstituteDashboard";
+import InstituteLogin from "./pages/InstituteLogin";
+import InstituteSignup from "./pages/InstituteSignup";
+import CompanyLogin from "./pages/CompanyLogin";
+import CompanySignup from "./pages/CompanySignup";
+import StudentLogin from "./pages/StudentLogin";
+import StudentSignup from "./pages/StudentSignup";
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +28,30 @@ function App() {
         <Route
          path="/institute"
          element={<InstituteDashboard />}
+        />
+        <Route
+         path="/institute/login"
+         element={<InstituteLogin />}
+        />
+        <Route
+         path="/institute/signup"
+         element={<InstituteSignup />}
+        />
+        <Route
+         path="/company/login"
+         element={<CompanyLogin />}
+        />
+        <Route
+         path="/company/signup"
+         element={<CompanySignup />}
+        />
+        <Route
+         path="/student/login"
+         element={<StudentLogin />}
+        />
+        <Route
+         path="/student/signup"
+         element={<StudentSignup />}
         />
       </Routes>
     </BrowserRouter>
