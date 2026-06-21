@@ -1,8 +1,5 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import {BrowserRouter,Routes,Route,} from "react-router-dom";
+import StudentDashboard from "./pages/StudentDashboard";
 import Home from "./pages/Home";
 function App() {
   return (
@@ -13,7 +10,10 @@ function App() {
           path="/"
           element={<Home />}
         />
-
+        <Route
+          path="/dashboard"
+           element={<StudentDashboard />}
+        />
       </Routes>
     </BrowserRouter>
   );
