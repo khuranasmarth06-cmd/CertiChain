@@ -16,3 +16,47 @@
   grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
   gap: 20px;
 }
+.issue-form {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.1);
+  display: grid;
+  gap: 15px;
+}
+.issue-form input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.issue-form button {
+  padding: 12px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  border-radius: 8px;
+}
+.certificate-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,.1);
+}
+.certificate-table th,.certificate-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+.certificate-table th {
+  background: #f8fafc;
+}
+.revoke-btn {
+  border: none;
+  background: #ef4444;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
