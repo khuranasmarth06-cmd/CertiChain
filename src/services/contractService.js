@@ -28,3 +28,11 @@ export async function issueCertificate(studentAddress,studentName,course,grade){
   await tx.wait();
   return tx.hash;
 }
+export async function getCertificate(certificateId) {
+      const contract =await getContract();
+      return await contract.getCertificate(certificateId);
+}
+export async function isValidCertificate(certificateId) {
+      const contract=await getContract();
+      return await contract.isValidCertificate(certificateId);
+}
