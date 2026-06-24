@@ -1,4 +1,4 @@
-import { BrowserProvider, Contract } from "ethers";
+import { BrowserProvider, Contract,ethers } from "ethers";
 import AcademicCertificateABI from "../abi/AcademicCertificate.json";
 import { CONTRACT_ADDRESS } from "../config/contract";
 export async function getContract() {
@@ -14,4 +14,17 @@ export async function getContract() {
     AcademicCertificateABI.abi,
     signer
   );
+}
+export async function issueCertificate(studentAddress,studentName,course,grade){
+  const contract =await getContract();
+  const hash =ethers.keccak256(ethers.toUtf8Bytes(`${studentName}${course}${grade}`));
+  const tx =await contract.issueCertificate(
+      studentAddress,
+      studentName,
+      course,
+      grade,
+      hash
+    );
+  await tx.wait();
+  return tx.hash;
 }
