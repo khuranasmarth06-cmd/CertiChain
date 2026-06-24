@@ -72,8 +72,7 @@ contract AcademicCertificate is ERC721, Ownable {
             revert AcademicCertificate__CertificateDoesNotExist();
         }
         if (
-            s_certificates[certificateId]
-                .revoked
+            s_certificates[certificateId].revoked
         ) {
             revert AcademicCertificate__CertificateAlreadyRevoked();
         }
@@ -102,21 +101,14 @@ contract AcademicCertificate is ERC721, Ownable {
     function isValidCertificate(
         uint256 certificateId
     )
+        view 
         external
         returns (bool)
     {
         if (_ownerOf(certificateId) == address(0)) {
             revert AcademicCertificate__CertificateDoesNotExist();
         }
-        bool valid =
-            !s_certificates[
-                certificateId
-            ].revoked;
-
-        emit CertificateVerified(
-            certificateId,
-            valid
-        );
+        bool valid =!s_certificates[certificateId].revoked;
         return valid;
     }
     function getCertificateCount()
