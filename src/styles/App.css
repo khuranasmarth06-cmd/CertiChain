@@ -1,56 +1,46 @@
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-body{
+body {
   font-family: Arial, Helvetica, sans-serif;
-  background:#ffffff;
+  background: var(--background);
+  color: var(--text);
 }
-a{
-  text-decoration:none;
+a {
+  text-decoration: none;
 }
-button{
-  cursor:pointer;
+button {
+  cursor: pointer;
 }
-.navbar{
-  background:#0f172a;
-
-  color:white;
-
-  padding:20px 8%;
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
+.navbar {
+  background: var(--surface);
+  color: var(--text);
+  padding: 20px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 10px var(--shadow);
 }
-
-.logo a{
-  color:white;
-
-  font-size:28px;
-
-  font-weight:bold;
+.logo a {
+  color: var(--primary);
+  font-size: 28px;
+  font-weight: bold;
 }
-
-.nav-links{
-  display:flex;
-
-  gap:25px;
-
-  list-style:none;
+.nav-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+  align-items: center;
 }
-
-.nav-links a{
-  color:white;
-
-  transition:.3s;
+.nav-links a {
+  color: var(--text);
+  transition: 0.3s;
 }
-
-.nav-links a:hover{
-  color:#38bdf8;
+.nav-links a:hover {
+  color: var(--primary);
 }
 .status {
   padding: 6px 14px;
@@ -75,9 +65,24 @@ button{
 }
 .wallet-btn {
   border: none;
-  background: #2563eb;
+  background: var(--primary);
   color: white;
   padding: 12px 20px;
   border-radius: 8px;
   cursor: pointer;
+  transition: 0.3s;
+}
+.wallet-btn:hover {
+  background: var(--primary-hover);
+}
+.theme-toggle {
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.theme-toggle:hover {
+  transform: rotate(20deg) scale(1.1);
 }

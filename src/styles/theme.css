@@ -1,0 +1,60 @@
+:root {
+  --background: #f8fafc;
+  --surface: #ffffff;
+
+  --text: #111827;
+  --secondary-text: #6b7280;
+
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+
+  --accent: #3b82f6;
+
+  --border: #e5e7eb;
+
+  --success: #22c55e;
+  --danger: #ef4444;
+
+  --shadow: rgba(0, 0, 0, 0.08);
+}
+body[data-theme="dark"] {
+  --background: #050816;
+  --surface: #111827;
+  --text: #f9fafb;
+  --secondary-text: #9ca3af;
+  --primary: #2563eb;
+  --primary-hover: #3b82f6;
+  --accent: #60a5fa;
+  --border: #1f2937;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --shadow: rgba(0, 0, 0, 0.45);
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--background);
+  color: var(--text);
+  transition:
+    background 0.35s ease,
+    color 0.35s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  transition: all 0.3s ease;
+}
+
+button {
+  cursor: pointer;
+}

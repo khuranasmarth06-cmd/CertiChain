@@ -6,22 +6,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 60px 8%;
-
-  background: #f8fafc;
+  background: var(--background);
+  transition: 0.3s ease;
 }
 .hero-left {
   flex: 1;
 }
 .hero-left h1 {
   font-size: 3.5rem;
-  color: #0f172a;
+  color: var(--text);
   margin-bottom: 20px;
 }
 .hero-left p {
   font-size: 18px;
-  color: #64748b;
+  color: var(--secondary-text);
   line-height: 1.8;
   max-width: 600px;
 }
@@ -31,72 +30,86 @@
   gap: 15px;
 }
 .primary-btn {
-  background: #2563eb;
+  background: var(--primary);
   color: white;
   border: none;
   padding: 14px 24px;
   border-radius: 8px;
+  transition: 0.3s ease;
+}
+.primary-btn:hover {
+  background: var(--primary-hover);
 }
 .secondary-btn {
-  background: #0f172a;
-  color: white;
-  border: none;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
   padding: 14px 24px;
   border-radius: 8px;
+  transition: 0.3s ease;
+}
+.secondary-btn:hover {
+  background: var(--primary);
+  color: white;
 }
 .hero-right img {
   width: 380px;
 }
 .features {
   padding: 80px 8%;
+  background: var(--background);
 }
 .features h2 {
   text-align: center;
   margin-bottom: 50px;
+  color: var(--text);
 }
 .feature-grid {
   display: grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(280px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
 }
 .feature-card {
-  background: white;
+  background: var(--surface);
+  color: var(--text);
   padding: 25px;
   border-radius: 12px;
-  box-shadow:
-    0 2px 10px rgba(0,0,0,.1);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: 0.3s ease;
+}
+.feature-card:hover {
+  transform: translateY(-6px);
 }
 .footer {
-  background: #0f172a;
-
-  color: white;
-
+  background: var(--surface);
+  color: var(--text);
   text-align: center;
-
   padding: 40px;
+  border-top: 1px solid var(--border);
 }
 .certificate-card {
-  background: white;
-
+  background: var(--surface);
+  color: var(--text);
   border-radius: 12px;
-
   padding: 20px;
-
-  box-shadow:
-    0 2px 10px rgba(0,0,0,.1);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: 0.3s ease;
 }
-
+.certificate-card:hover {
+  transform: translateY(-5px);
+}
 .certificate-header {
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
   margin-bottom: 15px;
 }
-
 .certificate-body p {
   margin-bottom: 10px;
+  color: var(--secondary-text);
+}
+.certificate-body strong {
+  color: var(--text);
 }
