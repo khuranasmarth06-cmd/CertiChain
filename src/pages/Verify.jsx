@@ -1,13 +1,22 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import StatusBadge from "../components/StatusBadge";
 import {getCertificate,isValidCertificate} from "../services/contractService";
 import "../styles/Verify.css";
 import { QRCodeCanvas } from "qrcode.react";
+import { useSearchParams } from "react-router-dom";
 function Verify() {
        const [tokenId, setTokenId] = useState("");
        const [certificate, setCertificate] =
        useState(null);
+       const [searchParams] =useSearchParams();
+       useEffect(() => {
+        const id =searchParams.get("tokenId");
+        if (id) {
+          setTokenId(id);
+        }
+        }, [searchParams]);
        const verifyCertificate=async () => {
        try {
             const cert=await getCertificate(tokenId);
@@ -26,6 +35,11 @@ function Verify() {
               setCertificate(null);
          }
 };
+useEffect(() => {
+  if (tokenId) {
+    verifyCertificate();
+  }
+}, [tokenId]);
 return (
 <> <Navbar />
   <div className="verify-container">
