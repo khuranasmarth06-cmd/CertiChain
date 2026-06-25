@@ -36,3 +36,28 @@ export async function isValidCertificate(certificateId) {
       const contract=await getContract();
       return await contract.isValidCertificate(certificateId);
 }
+export async function getCertificateCount() {
+  const contract = await getContract();
+  return Number(await contract.getCertificateCount());
+}
+export async function getAllCertificates() {
+  const contract = await getContract();
+  const count = Number(await contract.getCertificateCount());
+  const certificates=[];
+  for (let i = 1; i <= count; i++) {
+    try {
+      const cert=await contract.getCertificate(i);
+        certificates.push({
+        tokenId: Number(cert.id),
+        studentName: cert.studentName,
+        course: cert.course,
+        grade: cert.grade,
+        issuedAt: Number(cert.issuedAt),
+        revoked: cert.revoked,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  return certificates;
+}

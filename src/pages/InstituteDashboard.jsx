@@ -2,7 +2,6 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import CertificateTable from "../components/CertificateTable";
 import WalletConnect from "../components/WalletConnect";
-import { certificates } from "../data/certificates";
 import { issueCertificate } from "../services/contractService";
 import "../styles/Dashboard.css";
 function InstituteDashboard() {

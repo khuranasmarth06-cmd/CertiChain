@@ -1,10 +1,18 @@
 import Navbar from "../components/Navbar";
 import CertificateCard from "../components/CertificateCard";
-import { certificates }
-from "../data/certificates";
+import { useEffect, useState } from "react";
+import { getAllCertificates } from "../services/contractService";
 import "../styles/Dashboard.css";
 import WalletConnect from "../components/WalletConnect";
 function StudentDashboard() {
+  const [certificates, setCertificates] = useState([]);
+  useEffect(() => {
+    const fetchCertificates = async () => {
+      const certList = await getAllCertificates();
+      setCertificates(certList);
+    };
+    fetchCertificates();
+  }, []);
   return (
     <>
       <Navbar />

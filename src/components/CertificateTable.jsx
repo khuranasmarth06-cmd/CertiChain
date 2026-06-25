@@ -23,7 +23,7 @@ function CertificateTable({
             <td>{cert.course}</td>
             <td>
               <StatusBadge
-                status={cert.status}
+                 status={cert.revoked? "Revoked": "Valid"}
               />
             </td>
             <td>
