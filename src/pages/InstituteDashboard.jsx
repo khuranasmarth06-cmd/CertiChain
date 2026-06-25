@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Navbar from "../components/Navbar";
 import CertificateTable from "../components/CertificateTable";
 import WalletConnect from "../components/WalletConnect";
-import { issueCertificate } from "../services/contractService";
+import { issueCertificate,getAllCertificates } from "../services/contractService";
 import "../styles/Dashboard.css";
 function InstituteDashboard() {
     const [studentAddress, setStudentAddress] = useState("");
     const [studentName, setStudentName] = useState("");
     const [course, setCourse] = useState("");
     const [grade, setGrade] = useState("");
+    const [certificates, setCertificates] = useState([]);
+
+useEffect(() => {async function loadCertificates() {
+    const data = await getAllCertificates();
+    setCertificates(data);
+  }
+  loadCertificates();
+}, []);
     const handleIssueCertificate = async () => {
     try {
         const txHash = await issueCertificate(studentAddress,studentName,course,grade);

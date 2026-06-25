@@ -1,7 +1,20 @@
 import StatusBadge from "./StatusBadge";
-function CertificateTable({
-  certificates,
-}) {
+import { revokeCertificate } from "../services/contractService";
+function CertificateTable({certificates}) {
+  const handleRevoke=async (certificateId) => {
+    try {
+      const txHash =await revokeCertificate( certificateId);
+      alert(`Certificate Revoked!\n\n${txHash}`);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.shortMessage ||
+        error.reason ||
+        error.message
+      );
+    }
+  };
   return (
     <table className="certificate-table">
       <thead>
@@ -29,6 +42,7 @@ function CertificateTable({
             <td>
               <button
                 className="revoke-btn"
+                onClick={() =>handleRevoke(cert.tokenId)}
               >
                 Revoke
               </button>

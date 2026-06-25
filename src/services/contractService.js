@@ -61,3 +61,9 @@ export async function getAllCertificates() {
   }
   return certificates;
 }
+export async function revokeCertificate(certificateId){
+  const contract =await getContract();
+  const tx =await contract.revokeCertificate(certificateId);
+  await tx.wait();
+  return tx.hash;
+}

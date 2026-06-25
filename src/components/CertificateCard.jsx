@@ -10,7 +10,7 @@ function CertificateCard({ certificate }) {
       <div className="certificate-header">
         <h3>{certificate.course}</h3>
         <StatusBadge
-          status={certificate.status}
+             status={certificate.revoked? "Revoked": "Valid"}
         />
       </div>
       <div className="certificate-body">
