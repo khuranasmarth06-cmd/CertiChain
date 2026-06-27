@@ -12,12 +12,12 @@ function Home() {
               Blockchain • Secure • Decentralized
             </span>
             <h1>
-              Blockchain Academic
+              Blockchain Based  Academic
               <br />
-              Certificate Verification
+              Certificate Verifier
             </h1>
             <p>
-              CertChain is a blockchain-powered platform
+              CertiChain is a blockchain-powered platform
               that enables educational institutions to
               issue, manage and verify academic
               certificates securely using Ethereum smart
@@ -54,7 +54,7 @@ function Home() {
           </div>
         </section>
         <section className="features">
-          <h2>Why Choose CertChain?</h2>
+          <h2>Why Choose CertiChain?</h2>
           <p className="feature-subtitle">
             Built for educational institutions,
             students and employers with security,
@@ -152,9 +152,9 @@ function Home() {
           </div>
         </section>
         <footer className="footer">
-          <h3>CertChain</h3>
+          <h3>CertiChain</h3>
           <p>
-            Blockchain Certificate Verification
+            Blockchain Based Certificate Verification
             Platform
           </p>
         </footer>
