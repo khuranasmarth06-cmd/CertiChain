@@ -2,6 +2,7 @@
   "name": "certichain",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://khuranasmarth06-cmd.github.io/CertiChain",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy":"npm run build",
-    "deploy":"gh-pages-d dist"
+    "deploy":"gh-pages -d dist"
   },
   "dependencies": {
     "ethers": "^6.17.0",
