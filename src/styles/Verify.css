@@ -62,16 +62,22 @@
   color: var(--text);
 }
 .qr-section {
-  margin-top: 25px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
   text-align: center;
 }
-.qr-section h3 {
+.qr-section h4 {
   margin-bottom: 15px;
   color: var(--text);
 }
 .qr-section canvas {
-  padding: 10px;
   background: white;
+  padding: 12px;
   border-radius: 10px;
-  border: 1px solid var(--border);
+}
+.qr-text {
+  margin-top: 10px;
+  color: var(--secondary-text);
+  font-size: 14px;
 }

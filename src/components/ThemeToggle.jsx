@@ -5,10 +5,9 @@ function ThemeToggle() {
     <button
       className="theme-toggle"
       onClick={toggleTheme}
+      aria-label="Toggle Theme"
     >
-      {theme === "light"
-        ? "🌙"
-        : "☀️"}
+      {theme === "light" ? "🌙" : "☀️"}
     </button>
   );
 }
