@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import {FaBars,FaTimes,FaHome,FaSearch,FaUniversity,FaUserGraduate,FaCode} from "react-icons/fa";
 import ThemeToggle from "./ThemeToggle";
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -8,35 +8,23 @@ function Navbar() {
     <>
       <nav className="navbar">
         <div className="logo">
-          <Link to="/">
-            CertChain
-          </Link>
+          <Link to="/">CertiChain</Link>
         </div>
         <ul className="nav-links">
           <li>
-            <Link to="/">
-              Home
-            </Link>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/verify">
-              Verify
-            </Link>
+            <Link to="/verify">Verify</Link>
           </li>
           <li>
-            <Link to="/institute">
-              Institute
-            </Link>
+            <Link to="/institute">Institute</Link>
           </li>
           <li>
-            <Link to="/dashboard">
-              Student
-            </Link>
+            <Link to="/dashboard">Student</Link>
           </li>
           <li>
-            <Link to="/developer">
-              Developer
-            </Link>
+            <Link to="/developer">Developer</Link>
           </li>
         </ul>
         <div className="nav-actions">
@@ -57,9 +45,7 @@ function Navbar() {
         }
       >
         <div className="mobile-header">
-          <h2>
-            Navigation
-          </h2>
+          <h2>Navigation</h2>
           <button
             className="close-btn"
             onClick={() => setMenuOpen(false)}
@@ -71,32 +57,40 @@ function Navbar() {
           to="/"
           onClick={() => setMenuOpen(false)}
         >
-          Home
+          <FaHome />
+          <span>Home</span>
         </Link>
         <Link
           to="/verify"
           onClick={() => setMenuOpen(false)}
         >
-          Verify
+          <FaSearch />
+          <span>Verify</span>
         </Link>
         <Link
           to="/institute"
           onClick={() => setMenuOpen(false)}
         >
-          Institute
+          <FaUniversity />
+          <span>Institute</span>
         </Link>
         <Link
           to="/dashboard"
           onClick={() => setMenuOpen(false)}
         >
-          Student
+          <FaUserGraduate />
+          <span>Student</span>
         </Link>
         <Link
           to="/developer"
           onClick={() => setMenuOpen(false)}
         >
-          Developer
+          <FaCode />
+          <span>Developer</span>
         </Link>
+        <div className="sidebar-footer">
+          <p>CertChain v1.0</p>
+        </div>
       </div>
       {menuOpen && (
         <div
