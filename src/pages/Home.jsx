@@ -9,8 +9,7 @@ function Home() {
         <section className="hero">
           <div className="hero-left">
             <h1>
-              Blockchain Academic Certificate
-              Verification System
+              Blockchain Based Academic Certificate Verifier 
             </h1>
             <p>
               Securely issue, manage and verify
