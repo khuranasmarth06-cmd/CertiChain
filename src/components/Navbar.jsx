@@ -30,6 +30,11 @@ function Navbar() {
           </Link>
         </li>
         <li>
+        <Link to="/developer">
+         Developer
+        </Link>
+        </li>
+        <li>
           <ThemeToggle />
         </li>
       </ul>

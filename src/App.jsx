@@ -10,6 +10,7 @@ import CompanySignup from "./pages/CompanySignup";
 import StudentLogin from "./pages/StudentLogin";
 import StudentSignup from "./pages/StudentSignup";
 import NotFound from "./pages/NotFound";
+import Developer from "./pages/Developer";
 function App() {
   return (
     <BrowserRouter>
@@ -54,6 +55,10 @@ function App() {
          path="/student/signup"
          element={<StudentSignup />}
         />
+        <Route
+         path="/developer"
+         element={<Developer />}
+         />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
