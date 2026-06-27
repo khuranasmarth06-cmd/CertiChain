@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import {FaBars,FaTimes,FaHome,FaSearch,FaUniversity,FaUserGraduate,FaCode} from "react-icons/fa";
+import { FaBars, FaTimes, FaHome, FaSearch, FaUniversity, FaUserGraduate, FaCode } from "react-icons/fa";
 import ThemeToggle from "./ThemeToggle";
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -45,7 +45,12 @@ function Navbar() {
         }
       >
         <div className="mobile-header">
-          <h2>Navigation</h2>
+          <div className="sidebar-logo">
+            <h2>CertChain</h2>
+            <p>
+              Academic Certificate Verification
+            </p>
+          </div>
           <button
             className="close-btn"
             onClick={() => setMenuOpen(false)}
