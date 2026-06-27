@@ -56,12 +56,17 @@ function Navbar() {
             : "mobile-menu"
         }
       >
-        <button
-          className="close-btn"
-          onClick={() => setMenuOpen(false)}
-        >
-          <FaTimes />
-        </button>
+        <div className="mobile-header">
+          <h2>
+            Navigation
+          </h2>
+          <button
+            className="close-btn"
+            onClick={() => setMenuOpen(false)}
+          >
+            <FaTimes />
+          </button>
+        </div>
         <Link
           to="/"
           onClick={() => setMenuOpen(false)}
@@ -93,6 +98,12 @@ function Navbar() {
           Developer
         </Link>
       </div>
+      {menuOpen && (
+        <div
+          className="mobile-overlay"
+          onClick={() => setMenuOpen(false)}
+        ></div>
+      )}
     </>
   );
 }
