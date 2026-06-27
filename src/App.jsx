@@ -13,7 +13,7 @@ import NotFound from "./pages/NotFound";
 import Developer from "./pages/Developer";
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route
           path="/"
@@ -61,7 +61,7 @@ function App() {
          />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 export default App;
