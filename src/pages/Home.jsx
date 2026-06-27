@@ -6,74 +6,102 @@ function Home() {
     <>
       <Navbar />
       <div className="home">
-      <section className="hero">
-      <div className="hero-left">
+        <section className="hero">
+          <div className="hero-left">
             <span className="hero-tag">
-               Blockchain • Secure • Decentralized
-           </span>
-      <h1>
-      Blockchain Academic
-      <br />
-      Certificate Verification
-    </h1>
-    <p>
-      CertChain is a blockchain-powered platform
-      that enables educational institutions to
-      issue, manage and verify academic
-      certificates securely using Ethereum smart
-      contracts.
-    </p>
-    <div className="hero-buttons">
-      <button className="primary-btn">
-        Verify Certificate
-      </button>
-      <button className="secondary-btn">
-        Institute Portal
-      </button>
-    </div>
-    <div className="hero-highlights">
-      <div>
-        🔒
-        <span>Tamper Proof</span>
-      </div>
-      <div>
-        ⚡
-        <span>Instant Verification</span>
-      </div>
-        <div>
-        ⛓️
-        <span>Blockchain Secured</span>
+              Blockchain • Secure • Decentralized
+            </span>
+            <h1>
+              Blockchain Academic
+              <br />
+              Certificate Verification
+            </h1>
+            <p>
+              CertChain is a blockchain-powered platform
+              that enables educational institutions to
+              issue, manage and verify academic
+              certificates securely using Ethereum smart
+              contracts.
+            </p>
+            <div className="hero-buttons">
+              <button className="primary-btn">
+                Verify Certificate
+              </button>
+              <button className="secondary-btn">
+                Institute Portal
+              </button>
+            </div>
+            <div className="hero-highlights">
+              <div>
+                🔒
+                <span>Tamper Proof</span>
+              </div>
+              <div>
+                ⚡
+                <span>Instant Verification</span>
+              </div>
+              <div>
+                ⛓️
+                <span>Blockchain Secured</span>
+              </div>
+            </div>
           </div>
-        </div>
-       </div>
-      <div className="hero-right">
-       <img
-           src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png"
-           alt="Certificate"
-        />
-       </div>
-       </section>
+          <div className="hero-right">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png"
+              alt="Certificate"
+            />
+          </div>
+        </section>
         <section className="features">
-          <h2>
-            Why Choose CertChain?
-          </h2>
+          <h2>Why Choose CertChain?</h2>
+          <p className="feature-subtitle">
+            Built for educational institutions,
+            students and employers with security,
+            transparency and instant verification in
+            mind.
+          </p>
           <div className="feature-grid">
             <div className="feature-card">
-              <h3>Secure</h3>
+              <h3>🔒 Tamper Proof</h3>
               <p>
-                Protected by blockchain.
+                Certificates stored on blockchain
+                cannot be modified or forged.
               </p>
             </div>
             <div className="feature-card">
-              <h3>Instant Verification</h3>
+              <h3>⛓ Blockchain Security</h3>
               <p>
-                Verify certificates instantly.
+                Every certificate is secured by
+                Ethereum smart contracts.
               </p>
             </div>
             <div className="feature-card">
-              <h3>Tamper Proof</h3>
+              <h3>📱 QR Verification</h3>
               <p>
-                Certificates cannot be altered.
+                Scan the QR code to instantly verify
+                certificate authenticity.
+              </p>
+            </div>
+            <div className="feature-card">
+              <h3>⚡ Instant Verification</h3>
+              <p>
+                Verify certificates within seconds
+                without contacting the institute.
+              </p>
+            </div>
+            <div className="feature-card">
+              <h3>🚫 Certificate Revocation</h3>
+              <p>
+                Invalid or revoked certificates are
+                detected immediately.
+              </p>
+            </div>
+            <div className="feature-card">
+              <h3>🎓 NFT Certificates</h3>
+              <p>
+                Every academic certificate is issued
+                as a unique blockchain asset.
               </p>
             </div>
           </div>
