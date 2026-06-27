@@ -130,3 +130,65 @@ button {
 .active-link::after {
   width: 100%;
 }
+.menu-btn{
+  display:none;
+  border:none;
+  background:transparent;
+  color:var(--text);
+  font-size:24px;
+  cursor:pointer;
+}
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+.mobile-menu{
+  position:fixed;
+  top:0;
+  left:-280px;
+  width:260px;
+  height:100vh;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  padding:25px;
+  gap:20px;
+  transition:left .3s ease;
+  z-index:2000;
+  box-shadow:0 0 20px var(--shadow);
+}
+.mobile-menu.active{
+  left:0;
+}
+.mobile-menu a{
+  color:var(--text);
+  text-decoration:none;
+  font-size:18px;
+  font-weight:500;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+.close-btn{
+  align-self:flex-end;
+  background:none;
+  border:none;
+  color:var(--text);
+  font-size:24px;
+  cursor:pointer;
+}
+@media(max-width:768px){
+.nav-links{
+display:none;
+}
+.menu-btn{
+display:block;
+}
+.navbar{
+padding:18px 20px;
+}
+.logo a{
+font-size:24px;
+}
+}
