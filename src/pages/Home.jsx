@@ -106,6 +106,51 @@ function Home() {
             </div>
           </div>
         </section>
+        <section className="workflow">
+          <h2>How CertChain Works</h2>
+          <p className="workflow-subtitle">
+            A simple, secure and transparent certificate verification process powered by blockchain.
+          </p>
+          <div className="workflow-grid">
+            <div className="workflow-card">
+              <div className="workflow-icon">🏫</div>
+              <h3>Institute Issues</h3>
+              <p>
+                The institute issues a blockchain-backed academic certificate to a student.
+              </p>
+            </div>
+            <div className="workflow-arrow">
+              ➜
+            </div>
+            <div className="workflow-card">
+              <div className="workflow-icon">⛓️</div>
+              <h3>Blockchain Storage</h3>
+              <p>
+                Certificate information is securely stored on the Ethereum blockchain.
+              </p>
+            </div>
+            <div className="workflow-arrow">
+              ➜
+            </div>
+            <div className="workflow-card">
+              <div className="workflow-icon">🎓</div>
+              <h3>Student Receives</h3>
+              <p>
+                Students receive their certificate and can access it anytime.
+              </p>
+            </div>
+            <div className="workflow-arrow">
+              ➜
+            </div>
+            <div className="workflow-card">
+              <div className="workflow-icon">✅</div>
+              <h3>Verify Instantly</h3>
+              <p>
+                Companies or universities verify certificates instantly using Token ID or QR Code.
+              </p>
+            </div>
+          </div>
+        </section>
         <footer className="footer">
           <h3>CertChain</h3>
           <p>
