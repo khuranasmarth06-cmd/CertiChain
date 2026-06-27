@@ -128,3 +128,31 @@
   background: var(--primary);
   color: white;
 }
+.hero-tag {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 8px 16px;
+  border-radius: 25px;
+  background: rgba(37, 99, 235, .12);
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+.hero-left h1 {
+  font-size: 56px;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+.hero-highlights {
+  margin-top: 40px;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+.hero-highlights div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--secondary-text);
+  font-weight: 500;
+}
