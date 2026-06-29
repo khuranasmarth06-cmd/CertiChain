@@ -93,7 +93,7 @@ function Navbar() {
           <span>Student</span>
         </Link>
         <Link
-        to="/platformm"
+        to="/platform"
         onClick={() => setMenuOpen(false)}
         >
        <FaInfoCircle />
