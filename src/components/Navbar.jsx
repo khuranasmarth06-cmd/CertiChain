@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { FaBars, FaTimes, FaHome, FaSearch, FaUniversity, FaUserGraduate, FaCode } from "react-icons/fa";
 import ThemeToggle from "./ThemeToggle";
+import { FaInfoCircle } from "react-icons/fa";
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
@@ -23,6 +24,11 @@ function Navbar() {
           <li>
             <Link to="/dashboard">Student</Link>
           </li>
+          <li>
+        <Link to="/about">
+         About
+       </Link>
+        </li>
           <li>
             <Link to="/developer">Developer</Link>
           </li>
@@ -85,6 +91,13 @@ function Navbar() {
         >
           <FaUserGraduate />
           <span>Student</span>
+        </Link>
+        <Link
+        to="/about"
+        onClick={() => setMenuOpen(false)}
+        >
+       <FaInfoCircle />
+        <span>About</span>
         </Link>
         <Link
           to="/developer"

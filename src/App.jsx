@@ -1,3 +1,4 @@
+import About from "./pages/About";
 import {HashRouter,Routes,Route,} from "react-router-dom";
 import StudentDashboard from "./pages/StudentDashboard";
 import Home from "./pages/Home";
@@ -59,6 +60,10 @@ function App() {
          path="/developer"
          element={<Developer />}
          />
+         <Route
+           path="/about"
+          element={<About />}
+          />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
