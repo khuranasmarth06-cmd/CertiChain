@@ -58,45 +58,49 @@ function Home() {
             />
           </div>
         </section>
-        {/* Portal Section */}
         <section className="portal-section">
           <h2>
-            Choose Your Portal
+            Quick Access
           </h2>
           <p>
-            Access the appropriate dashboard based on
-            your role.
+            Choose where you want to continue.
           </p>
           <div className="portal-grid">
             <Link
-              to="/student/login"
+              to="/verify"
               className="portal-card"
             >
-              <h3>🎓 Student</h3>
-              <p>
-                View your certificates and
-                verification status.
-              </p>
-            </Link>
-            <Link
-              to="/company/login"
-              className="portal-card"
-            >
-              <h3>🏢 Company</h3>
-              <p>
-                Verify certificates issued by
-                educational institutes.
-              </p>
+              <div className="portal-icon">
+                🔍
+              </div>
+              <h3>Verify</h3>
             </Link>
             <Link
               to="/institute/login"
               className="portal-card"
             >
-              <h3>🏫 Institute</h3>
-              <p>
-                Issue and manage blockchain
-                certificates.
-              </p>
+              <div className="portal-icon">
+                🏫
+              </div>
+              <h3>Institute</h3>
+            </Link>
+            <Link
+              to="/student/login"
+              className="portal-card"
+            >
+              <div className="portal-icon">
+                🎓
+              </div>
+              <h3>Student</h3>
+            </Link>
+            <Link
+              to="/platform"
+              className="portal-card"
+            >
+              <div className="portal-icon">
+                🌐
+              </div>
+              <h3>Platform</h3>
             </Link>
           </div>
         </section>
