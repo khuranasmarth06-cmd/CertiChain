@@ -1,0 +1,49 @@
+.platform-page{
+padding:40px 8%;
+}
+.platform-hero{
+padding:80px 0;
+text-align:center;
+}
+.platform-hero h1{
+font-size:56px;
+margin-bottom:20px;
+color:var(--text);
+}
+.platform-hero p{
+max-width:700px;
+margin:auto;
+line-height:1.8;
+font-size:18px;
+color:var(--secondary-text);
+}
+.features{
+padding:60px 20px;
+}
+.features h2{
+font-size:32px;
+}
+.feature-subtitle{
+font-size:15px;
+margin-bottom:35px;
+}
+.feature-grid{
+grid-template-columns:1fr;
+gap:18px;
+}
+.feature-card{
+padding:22px;
+} 
+.workflow{
+padding:60px 20px;
+}
+.workflow h2{
+font-size:32px;
+}
+.workflow-grid{
+grid-template-columns:1fr;
+gap:20px;
+}
+.workflow-arrow{
+display:none;
+}

@@ -25,8 +25,8 @@ function Navbar() {
             <Link to="/dashboard">Student</Link>
           </li>
           <li>
-        <Link to="/about">
-         About
+        <Link to="/platform">
+         Platform
        </Link>
         </li>
           <li>
@@ -93,11 +93,11 @@ function Navbar() {
           <span>Student</span>
         </Link>
         <Link
-        to="/about"
+        to="/platformm"
         onClick={() => setMenuOpen(false)}
         >
        <FaInfoCircle />
-        <span>About</span>
+        <span>Platform</span>
         </Link>
         <Link
           to="/developer"

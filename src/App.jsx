@@ -1,4 +1,4 @@
-import About from "./pages/About";
+import Platform from "./pages/Platform";
 import {HashRouter,Routes,Route,} from "react-router-dom";
 import StudentDashboard from "./pages/StudentDashboard";
 import Home from "./pages/Home";
@@ -61,8 +61,8 @@ function App() {
          element={<Developer />}
          />
          <Route
-           path="/about"
-          element={<About />}
+           path="/platform"
+          element={<Platform/>}
           />
         <Route path="*" element={<NotFound />} />
       </Routes>

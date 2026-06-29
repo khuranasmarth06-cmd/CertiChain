@@ -292,23 +292,6 @@ justify-content:center;
 .hero-right img{
 width:220px;
 }
-.features{
-padding:60px 20px;
-}
-.features h2{
-font-size:32px;
-}
-.feature-subtitle{
-font-size:15px;
-margin-bottom:35px;
-}
-.feature-grid{
-grid-template-columns:1fr;
-gap:18px;
-}
-.feature-card{
-padding:22px;
-} 
 .workflow{
 padding:60px 20px;
 }
