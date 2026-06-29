@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 import "../styles/Home.css";
-
 function Home() {
   return (
     <>
@@ -12,24 +12,29 @@ function Home() {
               Blockchain • Secure • Decentralized
             </span>
             <h1>
-              Blockchain Based  Academic
+              Blockchain Based
               <br />
-              Certificate Verifier
+              Academic Certificate Verifier
             </h1>
             <p>
-              CertiChain is a blockchain-powered platform
-              that enables educational institutions to
-              issue, manage and verify academic
-              certificates securely using Ethereum smart
-              contracts.
+              CertiChain enables educational institutions
+              to issue, manage and verify academic
+              certificates securely using Ethereum
+              blockchain technology.
             </p>
             <div className="hero-buttons">
-              <button className="primary-btn">
+              <Link
+                to="/verify"
+                className="primary-btn"
+              >
                 Verify Certificate
-              </button>
-              <button className="secondary-btn">
+              </Link>
+              <Link
+                to="/institute/login"
+                className="secondary-btn"
+              >
                 Institute Portal
-              </button>
+              </Link>
             </div>
             <div className="hero-highlights">
               <div>
@@ -41,7 +46,7 @@ function Home() {
                 <span>Instant Verification</span>
               </div>
               <div>
-                ⛓️
+                ⛓
                 <span>Blockchain Secured</span>
               </div>
             </div>
@@ -53,11 +58,55 @@ function Home() {
             />
           </div>
         </section>
-        <footer className="footer">
-          <h3>CertiChain</h3>
+        {/* Portal Section */}
+        <section className="portal-section">
+          <h2>
+            Choose Your Portal
+          </h2>
           <p>
-            Blockchain Based Certificate Verification
-            Platform
+            Access the appropriate dashboard based on
+            your role.
+          </p>
+          <div className="portal-grid">
+            <Link
+              to="/student/login"
+              className="portal-card"
+            >
+              <h3>🎓 Student</h3>
+              <p>
+                View your certificates and
+                verification status.
+              </p>
+            </Link>
+            <Link
+              to="/company/login"
+              className="portal-card"
+            >
+              <h3>🏢 Company</h3>
+              <p>
+                Verify certificates issued by
+                educational institutes.
+              </p>
+            </Link>
+            <Link
+              to="/institute/login"
+              className="portal-card"
+            >
+              <h3>🏫 Institute</h3>
+              <p>
+                Issue and manage blockchain
+                certificates.
+              </p>
+            </Link>
+          </div>
+        </section>
+        <footer className="footer">
+          <h3>
+            CertiChain
+          </h3>
+          <p>
+            Blockchain Based Academic Certificate
+            Verification Platform
           </p>
         </footer>
       </div>
