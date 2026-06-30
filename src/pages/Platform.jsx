@@ -5,23 +5,14 @@ function Platform() {
     <>
       <Navbar />
       <div className="platform-page">
-        <section className="platform-hero">
-          <h1>
-            About CertChain
-          </h1>
-          <p>
-            A blockchain-powered platform for issuing,
-            managing and verifying academic certificates
-            securely.
-          </p>
-        </section>
         <section className="features">
-          <h2>Why Choose CertiChain?</h2>
+          <h2>
+            Why Choose CertChain?
+          </h2>
           <p className="feature-subtitle">
             Built for educational institutions,
-            students and employers with security,
-            transparency and instant verification in
-            mind.
+            students and recruiters with security,
+            transparency and instant verification.
           </p>
           <div className="feature-grid">
             <div className="feature-card">
@@ -34,7 +25,7 @@ function Platform() {
             <div className="feature-card">
               <h3>⛓ Blockchain Security</h3>
               <p>
-                Every certificate is secured by
+                Every certificate is secured using
                 Ethereum smart contracts.
               </p>
             </div>
@@ -55,40 +46,49 @@ function Platform() {
             <div className="feature-card">
               <h3>🚫 Certificate Revocation</h3>
               <p>
-                Invalid or revoked certificates are
-                detected immediately.
+                Revoked certificates are detected
+                immediately during verification.
               </p>
             </div>
             <div className="feature-card">
-              <h3>🎓 NFT Certificates</h3>
+              <h3>🎓 Blockchain Certificates</h3>
               <p>
-                Every academic certificate is issued
-                as a unique blockchain asset.
+                Every certificate is securely issued
+                and recorded on the blockchain.
               </p>
             </div>
           </div>
         </section>
-         <section className="workflow">
-          <h2>How CertChain Works</h2>
+        <section className="workflow">
+          <h2>
+            How CertChain Works
+          </h2>
           <p className="workflow-subtitle">
-            A simple, secure and transparent certificate verification process powered by blockchain.
+            A simple, secure and transparent
+            certificate verification process.
           </p>
           <div className="workflow-grid">
             <div className="workflow-card">
               <div className="workflow-icon">🏫</div>
-              <h3>Institute Issues</h3>
+              <h3>
+                Institute Issues
+              </h3>
               <p>
-                The institute issues a blockchain-backed academic certificate to a student.
+                The institute issues a blockchain
+                certificate to the student.
               </p>
             </div>
             <div className="workflow-arrow">
               ➜
             </div>
             <div className="workflow-card">
-              <div className="workflow-icon">⛓️</div>
-              <h3>Blockchain Storage</h3>
+              <div className="workflow-icon">⛓</div>
+              <h3>
+                Blockchain Storage
+              </h3>
               <p>
-                Certificate information is securely stored on the Ethereum blockchain.
+                Certificate details are securely
+                stored on Ethereum.
               </p>
             </div>
             <div className="workflow-arrow">
@@ -96,9 +96,12 @@ function Platform() {
             </div>
             <div className="workflow-card">
               <div className="workflow-icon">🎓</div>
-              <h3>Student Receives</h3>
+              <h3>
+                Student Receives
+              </h3>
               <p>
-                Students receive their certificate and can access it anytime.
+                Students can access their
+                certificates anytime.
               </p>
             </div>
             <div className="workflow-arrow">
@@ -106,9 +109,12 @@ function Platform() {
             </div>
             <div className="workflow-card">
               <div className="workflow-icon">✅</div>
-              <h3>Verify Instantly</h3>
+              <h3>
+                Instant Verification
+              </h3>
               <p>
-                Companies or universities verify certificates instantly using Token ID or QR Code.
+                Recruiters or universities verify
+                certificates using Token ID or QR.
               </p>
             </div>
           </div>
