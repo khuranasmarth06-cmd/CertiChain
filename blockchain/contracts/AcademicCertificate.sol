@@ -4,10 +4,12 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URISto
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 contract AcademicCertificate is
     Initializable,
     ERC721URIStorageUpgradeable,
     OwnableUpgradeable,
+    AccessControlUpgradeable,
     UUPSUpgradeable{
     uint256 private s_certificateCount;
     error AcademicCertificate__CertificateDoesNotExist();
@@ -37,6 +39,9 @@ contract AcademicCertificate is
     event CertificateCountUpdated(
         uint256 totalCertificates
     );
+    event InstituteAdded(address indexed institute);
+    event InstituteRemoved(address indexed institute);
+    bytes32 public constant INSTITUTE_ROLE =keccak256("INSTITUTE_ROLE");
     function initialize(address initialOwner)
     public
     initializer
@@ -47,6 +52,12 @@ contract AcademicCertificate is
     );
     __ERC721URIStorage_init();
     __Ownable_init(initialOwner);
+    __AccessControl_init();
+    _grantRole(DEFAULT_ADMIN_ROLE,initialOwner);
+    _grantRole(
+    INSTITUTE_ROLE,
+    initialOwner
+);
    }
     function issueCertificate(
         address student,
@@ -54,7 +65,7 @@ contract AcademicCertificate is
         string memory course,
         string memory grade,
         bytes32 certificateHash
-    ) external onlyOwner {
+    ) external onlyRole(INSTITUTE_ROLE) {
         if (student == address(0)) {
             revert AcademicCertificate__InvalidStudentAddress();
         }
@@ -80,7 +91,7 @@ contract AcademicCertificate is
     }
     function revokeCertificate(
         uint256 certificateId
-    ) external onlyOwner {
+    ) external onlyRole(INSTITUTE_ROLE) {
         if (_ownerOf(certificateId) == address(0)) {
             revert AcademicCertificate__CertificateDoesNotExist();
         }
@@ -144,16 +155,21 @@ contract AcademicCertificate is
     {
     return super.tokenURI(tokenId);
      }
-     function supportsInterface(
-    bytes4 interfaceId
-    )
-    public
-    view
-    override(
-        ERC721URIStorageUpgradeable
-    )
-    returns (bool)
-    {
-    return super.supportsInterface(interfaceId);
-     }
+     function supportsInterface(bytes4 interfaceId)public view override(
+        ERC721URIStorageUpgradeable,
+        AccessControlUpgradeable
+      )returns (bool)
+      {
+        return super.supportsInterface(interfaceId);
+       }
+     function addInstitute(address institute)external onlyRole(DEFAULT_ADMIN_ROLE)
+     {
+    grantRole(INSTITUTE_ROLE,institute);
+    emit InstituteAdded(institute);
+    }
+    function removeInstitute(address institute)
+    external onlyRole(DEFAULT_ADMIN_ROLE){
+    revokeRole(INSTITUTE_ROLE,institute);
+    emit InstituteRemoved(institute);
+    }
 }
