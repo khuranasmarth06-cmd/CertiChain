@@ -22,20 +22,6 @@ function Home() {
               certificates securely using Ethereum
               blockchain technology.
             </p>
-            <div className="hero-buttons">
-              <Link
-                to="/verify"
-                className="primary-btn"
-              >
-                Verify Certificate
-              </Link>
-              <Link
-                to="/institute/login"
-                className="secondary-btn"
-              >
-                Institute Portal
-              </Link>
-            </div>
             <div className="hero-highlights">
               <div>
                 🔒
