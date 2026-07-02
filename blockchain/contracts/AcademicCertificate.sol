@@ -17,6 +17,7 @@ contract AcademicCertificate is
     error AcademicCertificate__InvalidStudentAddress();
     struct Certificate {
         uint256 id;
+        address student;
         string studentName;
         string course;
         string grade;
@@ -25,6 +26,7 @@ contract AcademicCertificate is
         bool revoked;
     }
     mapping(uint256 => Certificate) private s_certificates;
+    mapping(address => uint256[]) private s_studentCertificates;
     event CertificateIssued(
         uint256 indexed certificateId,
         address indexed student
@@ -72,15 +74,17 @@ contract AcademicCertificate is
         s_certificateCount++;
         uint256 certificateId = s_certificateCount;
         _safeMint(student, certificateId);
+        s_studentCertificates[student].push(certificateId);
         s_certificates[certificateId] = Certificate({
             id: certificateId,
+            student: student,
             studentName: studentName,
             course: course,
             grade: grade,
             certificateHash: certificateHash,
             issuedAt: block.timestamp,
             revoked: false
-        });
+    });
         emit CertificateIssued(
             certificateId,
             student
@@ -171,5 +175,11 @@ contract AcademicCertificate is
     external onlyRole(DEFAULT_ADMIN_ROLE){
     revokeRole(INSTITUTE_ROLE,institute);
     emit InstituteRemoved(institute);
+    }
+    function getCertificatesByStudent(address student) external view returns (uint256[] memory){
+        return s_studentCertificates[student];
+    }
+    function getStudentCertificateCount(address student) external view returns (uint256){
+        return s_studentCertificates[student].length;
     }
 }
