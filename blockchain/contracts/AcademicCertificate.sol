@@ -15,6 +15,11 @@ contract AcademicCertificate is
     error AcademicCertificate__CertificateDoesNotExist();
     error AcademicCertificate__CertificateAlreadyRevoked();
     error AcademicCertificate__InvalidStudentAddress();
+    enum CertificateStatus {
+        Active,
+        Revoked,
+        Expired
+    }
     struct Certificate {
         uint256 id;
         address student;
@@ -23,7 +28,7 @@ contract AcademicCertificate is
         string grade;
         bytes32 certificateHash;
         uint256 issuedAt;
-        bool revoked;
+        CertificateStatus status;
     }
     mapping(uint256 => Certificate) private s_certificates;
     mapping(address => uint256[]) private s_studentCertificates;
@@ -43,6 +48,7 @@ contract AcademicCertificate is
     );
     event InstituteAdded(address indexed institute);
     event InstituteRemoved(address indexed institute);
+    event CertificateExpired(uint256 indexed certificateId);
     bytes32 public constant INSTITUTE_ROLE =keccak256("INSTITUTE_ROLE");
     function initialize(address initialOwner)
     public
@@ -83,7 +89,7 @@ contract AcademicCertificate is
             grade: grade,
             certificateHash: certificateHash,
             issuedAt: block.timestamp,
-            revoked: false
+            status: CertificateStatus.Active
     });
         emit CertificateIssued(
             certificateId,
@@ -93,23 +99,18 @@ contract AcademicCertificate is
             s_certificateCount
         );
     }
-    function revokeCertificate(
-        uint256 certificateId
-    ) external onlyRole(INSTITUTE_ROLE) {
-        if (_ownerOf(certificateId) == address(0)) {
-            revert AcademicCertificate__CertificateDoesNotExist();
-        }
-        if (
-            s_certificates[certificateId].revoked
-        ) {
-            revert AcademicCertificate__CertificateAlreadyRevoked();
-        }
-        s_certificates[certificateId]
-            .revoked = true;
-        emit CertificateRevoked(
-            certificateId
-        );
+    function revokeCertificate(uint256 certificateId) external onlyRole(INSTITUTE_ROLE) {
+    if (_ownerOf(certificateId) == address(0)) {
+        revert AcademicCertificate__CertificateDoesNotExist();
     }
+    if (
+        s_certificates[certificateId].status == CertificateStatus.Revoked
+    ) {
+        revert AcademicCertificate__CertificateAlreadyRevoked();
+    }
+    s_certificates[certificateId].status=CertificateStatus.Revoked;
+    emit CertificateRevoked(certificateId);
+}
     function getCertificate(
         uint256 certificateId
     )
@@ -125,19 +126,6 @@ contract AcademicCertificate is
         return s_certificates[
             certificateId
         ];
-    }
-    function isValidCertificate(
-        uint256 certificateId
-    )
-        view 
-        external
-        returns (bool)
-    {
-        if (_ownerOf(certificateId) == address(0)) {
-            revert AcademicCertificate__CertificateDoesNotExist();
-        }
-        bool valid =!s_certificates[certificateId].revoked;
-        return valid;
     }
     function getCertificateCount()
         external
@@ -181,5 +169,28 @@ contract AcademicCertificate is
     }
     function getStudentCertificateCount(address student) external view returns (uint256){
         return s_studentCertificates[student].length;
+    }
+    function expireCertificate(uint256 certificateId) external onlyRole(INSTITUTE_ROLE)
+    {
+    if (_ownerOf(certificateId) == address(0)) {
+        revert AcademicCertificate__CertificateDoesNotExist();
+    }
+    s_certificates[certificateId].status=CertificateStatus.Expired;
+    emit CertificateExpired(certificateId);
+   }
+   function getCertificateStatus(uint256 certificateId) external view returns (CertificateStatus) {
+    if (_ownerOf(certificateId) == address(0)) {
+        revert AcademicCertificate__CertificateDoesNotExist();
+    }
+    return s_certificates[certificateId].status;
+   }
+   function isCertificateActive(uint256 certificateId) external view returns (bool){
+    if (_ownerOf(certificateId) == address(0)) {
+        revert AcademicCertificate__CertificateDoesNotExist();
+    }
+    return s_certificates[certificateId].status==CertificateStatus.Active;
+    }
+    function certificateExists(uint256 certificateId) external view returns (bool){
+    return _ownerOf(certificateId) != address(0);
     }
 }
