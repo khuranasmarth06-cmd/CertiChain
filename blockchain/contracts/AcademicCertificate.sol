@@ -3,11 +3,8 @@ pragma solidity ^0.8.24;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
-contract AcademicCertificate is
-    ERC721URIStorage,
-    Ownable,
-    AccessControl
-{
+
+contract AcademicCertificate is ERC721URIStorage, Ownable, AccessControl {
     uint256 private s_certificateCount;
     error AcademicCertificate__CertificateDoesNotExist();
     error AcademicCertificate__CertificateAlreadyRevoked();
@@ -46,15 +43,11 @@ contract AcademicCertificate is
     event CertificateExpired(uint256 indexed certificateId);
     bytes32 public constant INSTITUTE_ROLE = keccak256("INSTITUTE_ROLE");
 
-     constructor(address initialOwner) ERC721("Academic Certificate", "CERT") Ownable(initialOwner){
-    _grantRole(
-        DEFAULT_ADMIN_ROLE,
-        initialOwner
-    );
-    _grantRole(
-        INSTITUTE_ROLE,
-        initialOwner
-    );
+    constructor(
+        address initialOwner
+    ) ERC721("Academic Certificate", "CERT") Ownable(initialOwner) {
+        _grantRole(DEFAULT_ADMIN_ROLE, initialOwner);
+        _grantRole(INSTITUTE_ROLE, initialOwner);
     }
 
     function issueCertificate(
@@ -120,26 +113,15 @@ contract AcademicCertificate is
         return s_certificateCount;
     }
 
-   
     function tokenURI(
         uint256 tokenId
-    )
-        public
-        view
-        override(ERC721URIStorage)
-        returns (string memory)
-    {
+    ) public view override(ERC721URIStorage) returns (string memory) {
         return super.tokenURI(tokenId);
     }
 
     function supportsInterface(
         bytes4 interfaceId
-    )
-        public
-        view
-        override(ERC721URIStorage,AccessControl)
-        returns (bool)
-    {
+    ) public view override(ERC721URIStorage, AccessControl) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 
