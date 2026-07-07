@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { network } from "hardhat";
 import { keccak256, solidityPacked, ZeroAddress } from "ethers";
 const { ethers } = await network.getOrCreate();
-describe("AcademicCertificate",  function () {
+describe("AcademicCertificate", function () {
     async function deployFixture() {
         const [owner, institute2, student1, student2, stranger] = await ethers.getSigners();
         const AcademicCertificate = await ethers.getContractFactory("AcademicCertificate");
@@ -207,52 +207,126 @@ describe("AcademicCertificate",  function () {
     describe("Institute Registry", function () {
         it("Should track certificates issued by an institute", async function () {
 
-    const {certificate,owner,student1,student2} = await deployFixture();
-    await certificate.connect(owner).issueCertificate(
-        student1.address,
-        "Alice",
-        "Blockchain",
-        "A"
-    );
-    await certificate.connect(owner).issueCertificate(
-        student2.address,
-        "Bob",
-        "Solidity",
-        "A+"
-    );
-    const ids =await certificate.getCertificatesByInstitute( owner.address);
-    expect(ids.length).to.equal(2);
-    expect(ids[0]).to.equal(1);
-    expect(ids[1]).to.equal(2);
-    });
-    it("Should separate certificates by institute", async function () {
-    const {certificate,owner,institute2,student1,student2} = await deployFixture();
-    await certificate.connect(owner).addInstitute(institute2.address);
-    await certificate.connect(owner).issueCertificate(
-            student1.address,
-            "Alice",
-            "Blockchain",
-            "A"
-    );
-    await certificate.connect(institute2).issueCertificate(
-            student2.address,
-            "Bob",
-            "Web3",
-            "A+"
-    );
-    const ownerCertificates=await certificate.getCertificatesByInstitute(owner.address);
-    const instituteCertificates =await certificate.getCertificatesByInstitute(
-            institute2.address
-    );
-    expect(ownerCertificates.length).to.equal(1);
-    expect(instituteCertificates.length).to.equal(1);
-    expect(ownerCertificates[0]).to.equal(1);
-    expect(instituteCertificates[0]).to.equal(2);
-    });
-    it("Should return an empty array for an institute with no certificates", async function () {
-    const {certificate,institute2}=await deployFixture();
-    const ids =await certificate.getCertificatesByInstitute(institute2.address);
-    expect(ids.length).to.equal(0);
-    });
+            const { certificate, owner, student1, student2 } = await deployFixture();
+            await certificate.connect(owner).issueCertificate(
+                student1.address,
+                "Alice",
+                "Blockchain",
+                "A"
+            );
+            await certificate.connect(owner).issueCertificate(
+                student2.address,
+                "Bob",
+                "Solidity",
+                "A+"
+            );
+            const ids = await certificate.getCertificatesByInstitute(owner.address);
+            expect(ids.length).to.equal(2);
+            expect(ids[0]).to.equal(1);
+            expect(ids[1]).to.equal(2);
+        });
+        it("Should separate certificates by institute", async function () {
+            const { certificate, owner, institute2, student1, student2 } = await deployFixture();
+            await certificate.connect(owner).addInstitute(institute2.address);
+            await certificate.connect(owner).issueCertificate(
+                student1.address,
+                "Alice",
+                "Blockchain",
+                "A"
+            );
+            await certificate.connect(institute2).issueCertificate(
+                student2.address,
+                "Bob",
+                "Web3",
+                "A+"
+            );
+            const ownerCertificates = await certificate.getCertificatesByInstitute(owner.address);
+            const instituteCertificates = await certificate.getCertificatesByInstitute(
+                institute2.address
+            );
+            expect(ownerCertificates.length).to.equal(1);
+            expect(instituteCertificates.length).to.equal(1);
+            expect(ownerCertificates[0]).to.equal(1);
+            expect(instituteCertificates[0]).to.equal(2);
+        });
+        it("Should return an empty array for an institute with no certificates", async function () {
+            const { certificate, institute2 } = await deployFixture();
+            const ids = await certificate.getCertificatesByInstitute(institute2.address);
+            expect(ids.length).to.equal(0);
+        });
+    })
+    describe("lifecycle and verification tests", function () {
+        it("Should return true for an active certificate", async function () {
+            const { certificate, owner, student1, } = await deployFixture();
+            await certificate.connect(owner).issueCertificate(
+                student1.address,
+                "Alice",
+                "Blockchain",
+                "A"
+            );
+            expect(await certificate.isCertificateActive(1)).to.equal(true);
+        });
+        it("Should return false for a revoked certificate", async function () {
+            const { certificate, owner, student1, } = await deployFixture();
+            await certificate.connect(owner).issueCertificate(
+                student1.address,
+                "Alice",
+                "Blockchain",
+                "A"
+            );
+            await certificate.connect(owner).revokeCertificate(1);
+            expect(await certificate.isCertificateActive(1)).to.equal(false);
+        });
+        it("Should return false for an expired certificate", async function () {
+            const { certificate, owner, student1, } = await deployFixture();
+            await certificate.connect(owner).issueCertificate(
+                student1.address,
+                "Alice",
+                "Blockchain",
+                "A"
+            );
+            await certificate.connect(owner).expireCertificate(1);
+            expect(await certificate.isCertificateActive(1)).to.equal(false);
+        });
+        it("Should verify stored certificate hash", async function () {
+            const { certificate, owner, student1, } = await deployFixture();
+            await certificate.connect(owner).issueCertificate(
+                student1.address,
+                "Alice",
+                "Blockchain",
+                "A"
+            );
+            const hash = await certificate.generateCertificateHash(
+                "Alice",
+                "Blockchain",
+                "A",
+                student1.address
+            );
+            expect(await certificate.verifyCertificateHash(hash)).to.equal(true);
+        });
+        it("Should return false for an invalid certificate hash", async function () {
+            const { certificate } = await deployFixture();
+            const fakeHash = await certificate.generateCertificateHash(
+                "Fake",
+                "Course",
+                "F",
+                "0x0000000000000000000000000000000000000001"
+            );
+            expect(await certificate.verifyCertificateHash(fakeHash)).to.equal(false);
+        });
+        it("Should return true when certificate exists", async function () {
+            const { certificate, owner, student1, } = await deployFixture();
+            await certificate.connect(owner).issueCertificate(
+                student1.address,
+                "Alice",
+                "Blockchain",
+                "A"
+            );
+            expect(await certificate.certificateExists(1)).to.equal(true);
+        });
+        it("Should return false when certificate does not exist", async function () {
+            const {certificate,} = await deployFixture();
+            expect(await certificate.certificateExists(100)).to.equal(false);
+        });
     })
 });
