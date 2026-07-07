@@ -31,6 +31,7 @@ contract AcademicCertificate is ERC721URIStorage, Ownable, AccessControl {
     mapping(uint256 => Certificate) private s_certificates;
     mapping(address => uint256[]) private s_studentCertificates;
     mapping(bytes32 => bool) private s_certificateHashes;
+    mapping(address => uint256[]) private s_instituteCertificates;
     event CertificateIssued(
         uint256 indexed certificateId,
         address indexed student
@@ -71,6 +72,7 @@ contract AcademicCertificate is ERC721URIStorage, Ownable, AccessControl {
         s_certificateCount++;
         uint256 certificateId = s_certificateCount;
         _safeMint(student, certificateId);
+        s_instituteCertificates[msg.sender].push(certificateId);
         s_studentCertificates[student].push(certificateId);
         s_certificateHashes[certificateHash] = true;
         s_certificates[certificateId] = Certificate({
@@ -207,5 +209,11 @@ contract AcademicCertificate is ERC721URIStorage, Ownable, AccessControl {
         bytes32 certificateHash
     ) external view returns (bool) {
         return s_certificateHashes[certificateHash];
+    }
+
+    function getCertificatesByInstitute(
+        address institute
+    ) external view returns (uint256[] memory) {
+        return s_instituteCertificates[institute];
     }
 }
