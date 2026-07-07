@@ -1,17 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
-import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 contract AcademicCertificate is
-    Initializable,
-    ERC721URIStorageUpgradeable,
-    OwnableUpgradeable,
-    AccessControlUpgradeable,
-    UUPSUpgradeable
+    ERC721URIStorage,
+    Ownable,
+    AccessControl
 {
     uint256 private s_certificateCount;
     error AcademicCertificate__CertificateDoesNotExist();
@@ -51,13 +46,15 @@ contract AcademicCertificate is
     event CertificateExpired(uint256 indexed certificateId);
     bytes32 public constant INSTITUTE_ROLE = keccak256("INSTITUTE_ROLE");
 
-    function initialize(address initialOwner) public initializer {
-        __ERC721_init("Academic Certificate", "CERT");
-        __ERC721URIStorage_init();
-        __Ownable_init(initialOwner);
-        __AccessControl_init();
-        _grantRole(DEFAULT_ADMIN_ROLE, initialOwner);
-        _grantRole(INSTITUTE_ROLE, initialOwner);
+     constructor(address initialOwner) ERC721("Academic Certificate", "CERT") Ownable(initialOwner){
+    _grantRole(
+        DEFAULT_ADMIN_ROLE,
+        initialOwner
+    );
+    _grantRole(
+        INSTITUTE_ROLE,
+        initialOwner
+    );
     }
 
     function issueCertificate(
@@ -123,16 +120,13 @@ contract AcademicCertificate is
         return s_certificateCount;
     }
 
-    function _authorizeUpgrade(
-        address newImplementation
-    ) internal override onlyOwner {}
-
+   
     function tokenURI(
         uint256 tokenId
     )
         public
         view
-        override(ERC721URIStorageUpgradeable)
+        override(ERC721URIStorage)
         returns (string memory)
     {
         return super.tokenURI(tokenId);
@@ -143,7 +137,7 @@ contract AcademicCertificate is
     )
         public
         view
-        override(ERC721URIStorageUpgradeable, AccessControlUpgradeable)
+        override(ERC721URIStorage,AccessControl)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);

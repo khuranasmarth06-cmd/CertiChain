@@ -3,6 +3,7 @@ import hardhatEthers from "@nomicfoundation/hardhat-ethers";
 import hardhatVerify from "@nomicfoundation/hardhat-verify";
 import hardhatToolboxMochaEthers from "@nomicfoundation/hardhat-toolbox-mocha-ethers";
 import hardhatNetworkHelpers from "@nomicfoundation/hardhat-network-helpers";
+import "@openzeppelin/hardhat-upgrades";
 import * as dotenv from "dotenv";
 dotenv.config();
 const config: HardhatUserConfig = {
