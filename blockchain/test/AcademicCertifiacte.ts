@@ -204,4 +204,55 @@ describe("AcademicCertificate",  function () {
             expect(await certificate.supportsInterface("0xffffffff")).to.be.false;
         });
     });
+    describe("Institute Registry", function () {
+        it("Should track certificates issued by an institute", async function () {
+
+    const {certificate,owner,student1,student2} = await deployFixture();
+    await certificate.connect(owner).issueCertificate(
+        student1.address,
+        "Alice",
+        "Blockchain",
+        "A"
+    );
+    await certificate.connect(owner).issueCertificate(
+        student2.address,
+        "Bob",
+        "Solidity",
+        "A+"
+    );
+    const ids =await certificate.getCertificatesByInstitute( owner.address);
+    expect(ids.length).to.equal(2);
+    expect(ids[0]).to.equal(1);
+    expect(ids[1]).to.equal(2);
+    });
+    it("Should separate certificates by institute", async function () {
+    const {certificate,owner,institute2,student1,student2} = await deployFixture();
+    await certificate.connect(owner).addInstitute(institute2.address);
+    await certificate.connect(owner).issueCertificate(
+            student1.address,
+            "Alice",
+            "Blockchain",
+            "A"
+    );
+    await certificate.connect(institute2).issueCertificate(
+            student2.address,
+            "Bob",
+            "Web3",
+            "A+"
+    );
+    const ownerCertificates=await certificate.getCertificatesByInstitute(owner.address);
+    const instituteCertificates =await certificate.getCertificatesByInstitute(
+            institute2.address
+    );
+    expect(ownerCertificates.length).to.equal(1);
+    expect(instituteCertificates.length).to.equal(1);
+    expect(ownerCertificates[0]).to.equal(1);
+    expect(instituteCertificates[0]).to.equal(2);
+    });
+    it("Should return an empty array for an institute with no certificates", async function () {
+    const {certificate,institute2}=await deployFixture();
+    const ids =await certificate.getCertificatesByInstitute(institute2.address);
+    expect(ids.length).to.equal(0);
+    });
+    })
 });
