@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import StatusBadge from "../components/StatusBadge";
-import { getCertificate, isValidCertificate } from "../services/contractService";
+import {getCertificate,isValidCertificate,getCertificateStatus,} from "../services/contractService";
 import "../styles/Verify.css";
 import { QRCodeCanvas } from "qrcode.react";
 import { useSearchParams } from "react-router-dom";
 function Verify() {
   const [tokenId, setTokenId] = useState("");
-  const [certificate, setCertificate] =
-    useState(null);
+  const [certificate, setCertificate] = useState(null);
+  const [notFound, setNotFound] = useState(false);
+  const [checking, setChecking] = useState(false);
   const [searchParams] = useSearchParams();
   useEffect(() => {
     const id = searchParams.get("tokenId");
@@ -18,21 +18,28 @@ function Verify() {
     }
   }, [searchParams]);
   const verifyCertificate = async () => {
+    if (!tokenId) return;
+    setChecking(true);
+    setNotFound(false);
     try {
       const cert = await getCertificate(tokenId);
       const valid = await isValidCertificate(tokenId);
+      const status = await getCertificateStatus(tokenId);
       setCertificate({
         id: Number(cert.id),
         studentName: cert.studentName,
         course: cert.course,
         grade: cert.grade,
         issuedAt: Number(cert.issuedAt),
-        revoked: !valid,
+        status,
+        valid,
       });
     } catch (error) {
       console.error(error);
-      alert("Certificate not found");
       setCertificate(null);
+      setNotFound(true);
+    } finally {
+      setChecking(false);
     }
   };
   useEffect(() => {
@@ -40,98 +47,56 @@ function Verify() {
       verifyCertificate();
     }
   }, [tokenId]);
+  const BASE_URL = `${window.location.origin}${window.location.pathname.replace(/\/verify.*/, "")}`;
+  const verifyUrl = certificate
+    ? `${BASE_URL}/verify?tokenId=${certificate.id}`
+    : "";
   return (
-    <> <Navbar />
+    <>
+      <Navbar />
       <div className="verify-container">
-        <h1>
-          Verify Certificate
-        </h1>
-        <p>
-          Enter a certificate Token ID.
-        </p>
+        <h1>Verify Certificate</h1>
+        <p>Enter a certificate Token ID.</p>
         <div className="verify-form">
           <input
             type="number"
             placeholder="Enter Token ID"
             value={tokenId}
-            onChange={(e) =>
-              setTokenId(
-                e.target.value
-              )
-            }
+            onChange={(e) => setTokenId(e.target.value)}
           />
-          <button
-            onClick={
-              verifyCertificate
-            }
-          >
-            Verify
+          <button onClick={verifyCertificate} disabled={checking}>
+            {checking ? "Checking..." : "Verify"}
           </button>
         </div>
+        {notFound && <p>Certificate not found.</p>}
         {certificate && (
           <div className="verify-result">
-            <h2>
-              Certificate Found
-            </h2>
+            <h2>Certificate Found</h2>
             <p>
-              <strong>
-                Student:
-              </strong>{" "}
-              {
-                certificate.studentName
-              }
+              <strong>Student:</strong> {certificate.studentName}
             </p>
             <p>
-              <strong>
-                Course:
-              </strong>{" "}
-              {
-                certificate.course
-              }
-            </p>
-
-            <p>
-              <strong>
-                Grade:
-              </strong>{" "}
-              {
-                certificate.grade
-              }
+              <strong>Course:</strong> {certificate.course}
             </p>
             <p>
-              <strong>
-                Certificate ID:
-              </strong>{" "}
-              {
-                certificate.id
-              }
+              <strong>Grade:</strong> {certificate.grade}
             </p>
             <p>
-              <strong>
-                Issued At:
-              </strong>{" "}
-              {new Date(
-                certificate.issuedAt *
-                1000
-              ).toLocaleDateString()}
+              <strong>Certificate ID:</strong> {certificate.id}
             </p>
-            <StatusBadge
-              status={
-                certificate.revoked
-                  ? "Revoked"
-                  : "Valid"
-              }
-            />
+            <p>
+              <strong>Issued At:</strong>{" "}
+              {new Date(certificate.issuedAt * 1000).toLocaleDateString()}
+            </p>
+            <StatusBadge status={certificate.status} />
+            <p>
+              {certificate.valid
+                ? "This certificate is currently valid."
+                : "This certificate is not currently valid (revoked or expired)."}
+            </p>
             <div className="qr-section">
-              <h3>
-                Verification QR
-              </h3>
-              const BASE_URL = `${window.location.origin}/CertiChain`;
-              const verifyUrl = `${BASE_URL}/verify?tokenId=${certificate.id}`;
-              <QRCodeCanvas
-                value={verifyUrl}
-                size={150}
-              />
+              <h3>Verification QR</h3>
+              <QRCodeCanvas value={verifyUrl} size={150} />
             </div>
           </div>
         )}

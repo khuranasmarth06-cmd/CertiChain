@@ -1,69 +1,151 @@
-import { BrowserProvider, Contract,ethers } from "ethers";
-import AcademicCertificateABI from "../abi/AcademicCertificate.json";
-import { CONTRACT_ADDRESS } from "../config/contract";
-export async function getContract() {
-  if (!window.ethereum) {
-    throw new Error(
-      "MetaMask not installed"
-    );
+import {readContract,writeContract,waitForTransactionReceipt,getAccount,} from "@wagmi/core";
+import { isAddress } from "viem";
+import { config } from "../config/wagmi";
+import { CONTRACT_ADDRESS, ABI } from "../config/contract";
+const STATUS_LABELS = ["Active", "Revoked", "Expired"];
+export function statusLabel(status) {
+  return STATUS_LABELS[Number(status)] ?? "Unknown";
+}
+function assertAddress(address, label = "Address") {
+  if (!address || !isAddress(address)) {
+    throw new Error(`${label} is not a valid wallet address`);
   }
-  const provider =new BrowserProvider(window.ethereum);
-  const signer=await provider.getSigner();
-  return new Contract(
-    CONTRACT_ADDRESS,
-    AcademicCertificateABI.abi,
-    signer
-  );
 }
-export async function issueCertificate(studentAddress,studentName,course,grade){
-  const contract =await getContract();
-  const hash =ethers.keccak256(ethers.toUtf8Bytes(`${studentName}${course}${grade}`));
-  const tx =await contract.issueCertificate(
-      studentAddress,
-      studentName,
-      course,
-      grade,
-      hash
-    );
-  await tx.wait();
-  return tx.hash;
+async function read(functionName, args = []) {
+  return readContract(config, {
+    address: CONTRACT_ADDRESS,
+    abi: ABI,
+    functionName,
+    args,
+  });
 }
+async function write(functionName, args = []) {
+  const { address } = getAccount(config);
+  if (!address) {
+    throw new Error("Connect your wallet first");
+  }
+  const hash = await writeContract(config, {
+    address: CONTRACT_ADDRESS,
+    abi: ABI,
+    functionName,
+    args,
+  });
+  await waitForTransactionReceipt(config, { hash });
+  return hash;
+}
+export async function issueCertificate(
+  studentAddress,
+  studentName,
+  course,
+  grade
+) {
+  assertAddress(studentAddress, "Student address");
+  if (!studentName || !course || !grade) {
+    throw new Error("Student name, course and grade are required");
+  }
+  return write("issueCertificate", [
+    studentAddress,
+    studentName,
+    course,
+    grade,
+  ]);
+}
+
+export async function revokeCertificate(certificateId) {
+  return write("revokeCertificate", [BigInt(certificateId)]);
+}
+
+export async function expireCertificate(certificateId) {
+  return write("expireCertificate", [BigInt(certificateId)]);
+}
+
 export async function getCertificate(certificateId) {
-      const contract =await getContract();
-      return await contract.getCertificate(certificateId);
+  return read("getCertificate", [BigInt(certificateId)]);
 }
-export async function isValidCertificate(certificateId) {
-      const contract=await getContract();
-      return await contract.isValidCertificate(certificateId);
-}
+
 export async function getCertificateCount() {
-  const contract = await getContract();
-  return Number(await contract.getCertificateCount());
+  const count = await read("getCertificateCount");
+  return Number(count);
 }
-export async function getAllCertificates() {
-  const contract = await getContract();
-  const count = Number(await contract.getCertificateCount());
-  const certificates=[];
-  for (let i = 1; i <= count; i++) {
-    try {
-      const cert=await contract.getCertificate(i);
-        certificates.push({
-        tokenId: Number(cert.id),
-        studentName: cert.studentName,
-        course: cert.course,
-        grade: cert.grade,
-        issuedAt: Number(cert.issuedAt),
-        revoked: cert.revoked,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  return certificates;
+
+export async function getCertificateStatus(certificateId) {
+  const status = await read("getCertificateStatus", [BigInt(certificateId)]);
+  return statusLabel(status);
 }
-export async function revokeCertificate(certificateId){
-  const contract =await getContract();
-  const tx =await contract.revokeCertificate(certificateId);
-  await tx.wait();
-  return tx.hash;
+
+export async function isValidCertificate(certificateId) {
+  return read("isCertificateActive", [BigInt(certificateId)]);
+}
+
+export async function certificateExists(certificateId) {
+  return read("certificateExists", [BigInt(certificateId)]);
+}
+
+export async function getCertificatesByStudent(studentAddress) {
+  assertAddress(studentAddress, "Student address");
+  return read("getCertificatesByStudent", [studentAddress]);
+}
+
+export async function getStudentCertificateCount(studentAddress) {
+  assertAddress(studentAddress, "Student address");
+  const count = await read("getStudentCertificateCount", [studentAddress]);
+  return Number(count);
+}
+
+export async function getCertificatesByInstitute(instituteAddress) {
+  assertAddress(instituteAddress, "Institute address");
+  return read("getCertificatesByInstitute", [instituteAddress]);
+}
+export async function getMyIssuedCertificates() {
+  const { address } = getAccount(config);
+  if (!address) return [];
+  const ids = await getCertificatesByInstitute(address);
+  const certs = await Promise.all(
+    ids.map((id) => getCertificate(id))
+  );
+  return certs;
+}
+
+export async function generateCertificateHash(
+  studentName,
+  course,
+  grade,
+  studentAddress
+) {
+  assertAddress(studentAddress, "Student address");
+  return read("generateCertificateHash", [
+    studentName,
+    course,
+    grade,
+    studentAddress,
+  ]);
+}
+
+export async function verifyCertificateHash(certificateHash) {
+  return read("verifyCertificateHash", [certificateHash]);
+}
+export async function addInstitute(instituteAddress) {
+  assertAddress(instituteAddress, "Institute address");
+  return write("addInstitute", [instituteAddress]);
+}
+
+export async function removeInstitute(instituteAddress) {
+  assertAddress(instituteAddress, "Institute address");
+  return write("removeInstitute", [instituteAddress]);
+}
+
+export async function isInstitute(address) {
+  assertAddress(address, "Address");
+  const role = await read("INSTITUTE_ROLE");
+  return read("hasRole", [role, address]);
+}
+
+export async function isAdmin(address) {
+  assertAddress(address, "Address");
+  const role = await read("DEFAULT_ADMIN_ROLE");
+  return read("hasRole", [role, address]);
+}
+
+export async function getContractOwner() {
+  return read("owner");
 }

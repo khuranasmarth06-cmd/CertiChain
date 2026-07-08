@@ -1,23 +1,44 @@
 import StatusBadge from "./StatusBadge";
 import { QRCodeCanvas } from "qrcode.react";
 function CertificateCard({ certificate }) {
-  const copyLink = () => {
-    const url = `http://localhost:5173/verify?tokenId=${certificate.tokenId}`;
-    navigator.clipboard.writeText(url);
+  const certificateId = Number(certificate.id);
+const verificationUrl =`${window.location.origin}/verify?certificateId=${certificateId}`;  const copyLink = () => {
+    navigator.clipboard.writeText(verificationUrl);
     alert("Verification link copied!");
+  };
+  const getStatus = (status) => {
+    switch (Number(status)) {
+      case 0:
+        return "Active";
+      case 1:
+        return "Revoked";
+      case 2:
+        return "Expired";
+      default:
+        return "Unknown";
+    }
+  };
+  const formatDate = (timestamp) => {
+    return new Date(
+      Number(timestamp) * 1000
+    ).toLocaleDateString();
   };
   return (
     <div className="certificate-card">
       <div className="certificate-header">
         <h3>{certificate.course}</h3>
         <StatusBadge
-          status={certificate.revoked ? "Revoked": "Valid"}
+          status={getStatus(certificate.status)}
         />
       </div>
       <div className="certificate-body">
         <p>
           <strong>Student:</strong>{" "}
           {certificate.studentName}
+        </p>
+        <p>
+          <strong>Wallet:</strong>{" "}
+          {`${certificate.student.slice(0, 6)}...${certificate.student.slice(-4)}`}
         </p>
         <p>
           <strong>Course:</strong>{" "}
@@ -28,13 +49,17 @@ function CertificateCard({ certificate }) {
           {certificate.grade}
         </p>
         <p>
-          <strong>Token ID:</strong>{" "}
-          {certificate.tokenId}
+          <strong>Certificate ID:</strong>{" "}
+          {certificateId}
+        </p>
+        <p>
+          <strong>Issued On:</strong>{" "}
+          {formatDate(certificate.issuedAt)}
         </p>
         <div className="qr-section">
           <h4>Verification QR</h4>
           <QRCodeCanvas
-            value={`http://localhost:5173/verify?tokenId=${certificate.tokenId}`}
+            value={verificationUrl}
             size={140}
           />
           <p className="qr-text">

@@ -1,21 +1,32 @@
-import { useState } from "react";
-function WalletConnect() {
-  const [account,setAccount] =useState("");
-  const connectWallet =async () => {
-      if(!window.ethereum) {
-        alert("Install MetaMask");
-        return;
-      }
-      const accounts=await window.ethereum.request({
-        method:"eth_requestAccounts",
-      });
-      setAccount(accounts[0]);
-    };
+import {useAccount,useConnect,useDisconnect,} from "wagmi";
+export default function WalletConnect() {
+  const { address, isConnected } = useAccount();
+  const {connect,connectors,} = useConnect();
+  const {disconnect,} = useDisconnect();
+  if (!isConnected) {
+    return (
+      <button
+        className="connect-wallet-btn"
+        onClick={() =>
+          connect({
+            connector: connectors[0],
+          })
+        }
+      >
+        Connect Wallet
+      </button>
+    );
+  }
   return (
-    <button
-      onClick={connectWallet}>
-      {account?`${account.slice(0,6)}...${account.slice(-4)}`:"Connect Wallet"}
-    </button>
+    <div className="wallet-info">
+      <span>
+        {`${address.slice(0,6)}...${address.slice(-4)}`}
+      </span>
+      <button
+        onClick={() => disconnect()}
+      >
+        Disconnect
+      </button>
+    </div>
   );
 }
-export default WalletConnect;
