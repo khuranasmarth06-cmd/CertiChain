@@ -120,3 +120,13 @@
   color: var(--secondary-text);
   font-size: 14px;
 }
+.welcome-text {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.welcome-text span {
+  color: var(--primary);
+}

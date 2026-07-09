@@ -1,5 +1,5 @@
 import Platform from "./pages/Platform";
-import {HashRouter,Routes,Route,} from "react-router-dom";
+import { HashRouter, Routes, Route, } from "react-router-dom";
 import StudentDashboard from "./pages/StudentDashboard";
 import Home from "./pages/Home";
 import Verify from "./pages/Verify";
@@ -21,49 +21,45 @@ function App() {
           element={<Home />}
         />
         <Route
-          path="/dashboard"
-           element={<StudentDashboard />}
+          path="/student/dashboard"
+          element={<StudentDashboard />}
         />
         <Route
-          path="/verify"
-         element={<Verify />}
+          path="/institute/dashboard"
+          element={<InstituteDashboard />}
         />
         <Route
-         path="/institute"
-         element={<InstituteDashboard />}
+          path="/institute/login"
+          element={<InstituteLogin />}
         />
         <Route
-         path="/institute/login"
-         element={<InstituteLogin />}
+          path="/institute/signup"
+          element={<InstituteSignup />}
         />
         <Route
-         path="/institute/signup"
-         element={<InstituteSignup />}
+          path="/company/login"
+          element={<CompanyLogin />}
         />
         <Route
-         path="/company/login"
-         element={<CompanyLogin />}
+          path="/company/signup"
+          element={<CompanySignup />}
         />
         <Route
-         path="/company/signup"
-         element={<CompanySignup />}
+          path="/student/login"
+          element={<StudentLogin />}
         />
         <Route
-         path="/student/login"
-         element={<StudentLogin />}
+          path="/student/signup"
+          element={<StudentSignup />}
         />
         <Route
-         path="/student/signup"
-         element={<StudentSignup />}
+          path="/developer"
+          element={<Developer />}
         />
         <Route
-         path="/developer"
-         element={<Developer />}
-         />
-         <Route
-           path="/platform"
-          element={<Platform/>}
-          />
+          path="/platform"
+          element={<Platform />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>

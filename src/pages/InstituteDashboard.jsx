@@ -76,11 +76,16 @@ function InstituteDashboard() {
       <Navbar />
       <div className="dashboard">
         <div className="dashboard-header">
+          <h2 className="welcome-text">
+            👋 Welcome, ABC University
+          </h2>
           <div className="dashboard-top">
             <h1>Institute Dashboard</h1>
             <WalletConnect />
           </div>
-          <p>Issue and manage certificates.</p>
+          <p>
+            Issue and manage certificates.
+          </p>
         </div>
         <div className="issue-form">
           <h2>Issue Certificate</h2>
