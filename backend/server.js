@@ -4,11 +4,13 @@ import dotenv from "dotenv";
 dotenv.config();
 import connectDB from "./config/db.js";
 import studentRoutes from "./student/routes/studentRoutes.js";
+import instituteRoutes from "./institute/routes/instituteRoutes.js";
 const app = express();
 connectDB();
 app.use(cors());
 app.use(express.json());
 app.use("/api/student", studentRoutes);
+app.use("/api/institute", instituteRoutes);
 app.get("/", (req, res) => {
     res.send("CertiChain Backend Running...");
 });
