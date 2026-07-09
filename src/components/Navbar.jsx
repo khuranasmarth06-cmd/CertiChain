@@ -16,21 +16,14 @@ function Navbar() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/verify">Verify</Link>
+            <Link to="/platform">
+              Platform
+            </Link>
           </li>
           <li>
-            <Link to="/institute">Institute</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Student</Link>
-          </li>
-          <li>
-        <Link to="/platform">
-         Platform
-       </Link>
-        </li>
-          <li>
-            <Link to="/developer">Developer</Link>
+            <Link to="/developer">
+              Developer
+            </Link>
           </li>
         </ul>
         <div className="nav-actions">
@@ -71,34 +64,15 @@ function Navbar() {
           <FaHome />
           <span>Home</span>
         </Link>
+
         <Link
-          to="/verify"
+          to="/platform"
           onClick={() => setMenuOpen(false)}
         >
-          <FaSearch />
-          <span>Verify</span>
+          <FaInfoCircle />
+          <span>Platform</span>
         </Link>
-        <Link
-          to="/institute"
-          onClick={() => setMenuOpen(false)}
-        >
-          <FaUniversity />
-          <span>Institute</span>
-        </Link>
-        <Link
-          to="/dashboard"
-          onClick={() => setMenuOpen(false)}
-        >
-          <FaUserGraduate />
-          <span>Student</span>
-        </Link>
-        <Link
-        to="/platform"
-        onClick={() => setMenuOpen(false)}
-        >
-       <FaInfoCircle />
-        <span>Platform</span>
-        </Link>
+
         <Link
           to="/developer"
           onClick={() => setMenuOpen(false)}
