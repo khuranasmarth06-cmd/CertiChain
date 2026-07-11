@@ -75,6 +75,18 @@ function Developer() {
             >
               Go to Admin Dashboard
             </button>
+            <div className="contact-admin-btn">
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=admincertichain@gmail.com&su=CertiChain%20Support"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+
+                <button>
+                  Contact Admin
+                </button>
+              </a>
+            </div>
           </div>
         </div>
       </div>

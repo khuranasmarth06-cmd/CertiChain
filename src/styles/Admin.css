@@ -73,3 +73,28 @@
   background: #1d4ed8;
   transform: translateY(-2px);
 }
+.contact-admin-btn {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.contact-admin-btn button {
+    padding: 12px 28px;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.contact-admin-btn button:hover {
+    background: #059669;
+    transform: translateY(-2px);
+}
+
+.contact-admin-btn a {
+    text-decoration: none;
+}
