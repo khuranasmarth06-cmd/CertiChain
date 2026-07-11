@@ -49,7 +49,7 @@ function Verify() {
   }, [tokenId]);
   const BASE_URL = `${window.location.origin}${window.location.pathname.replace(/\/verify.*/, "")}`;
   const verifyUrl = certificate
-    ? `${BASE_URL}/verify?tokenId=${certificate.id}`
+    ? `${BASE_URL}#/verify?tokenId=${certificate.id}`
     : "";
   return (
     <>
