@@ -12,8 +12,13 @@ import {
 } from "../services/contractService";
 import { useAccount } from "wagmi";
 import "../styles/Dashboard.css";
+import LogoutButton from "../components/LogoutButton";
 function InstituteDashboard() {
   const { isConnected } = useAccount();
+  const institute = JSON.parse(
+    localStorage.getItem("institute")
+  );
+  const instituteName = institute?.instituteName || "Institute";
   const [studentAddress, setStudentAddress] = useState("");
   const [studentName, setStudentName] = useState("");
   const [course, setCourse] = useState("");
@@ -77,11 +82,11 @@ function InstituteDashboard() {
       <div className="dashboard">
         <div className="dashboard-header">
           <h2 className="welcome-text">
-            👋 Welcome, ABC University
+            👋 Welcome, {instituteName}
           </h2>
           <div className="dashboard-top">
             <h1>Institute Dashboard</h1>
-            <WalletConnect />
+            <LogoutButton />
           </div>
           <p>
             Issue and manage certificates.

@@ -1,23 +1,45 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import {useAccount,useConnect,useDisconnect,} from "wagmi";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { loginStudent } from "../services/studentAuth";
 import "../styles/Auth.css";
 function StudentLogin() {
-  const [password, setPassword] = useState("");
-  const { address, isConnected } = useAccount();
-  const { connect, connectors } = useConnect();
-  const { disconnect } = useDisconnect();
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (!isConnected) {
-      alert("Please connect MetaMask.");
-      return;
+  const navigate = useNavigate();
+  useEffect(() => {
+    const student = localStorage.getItem("student");
+    if (student) {
+      navigate("/student/dashboard");
     }
-    console.log({
-      walletAddress: address,
-      password,
-    });
+  }, [navigate]);
+  const [walletAddress, setWalletAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await loginStudent({
+        walletAddress,
+        password,
+      });
+      console.log(response);
+      localStorage.setItem(
+        "token",
+        response.token
+      );
+      localStorage.setItem(
+        "student",
+        JSON.stringify(response.student)
+      );
+      alert(
+        response.message || "Login Successful"
+      );
+      navigate("/student/dashboard");
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.response?.data?.message ||
+        "Login Failed"
+      );
+    }
   };
   return (
     <>
@@ -29,35 +51,15 @@ function StudentLogin() {
             className="auth-form"
             onSubmit={handleLogin}
           >
-            <div className="wallet-box">
-              <input
-                type="text"
-                placeholder="Wallet Address"
-                value={address || ""}
-                readOnly
-              />
-              {!isConnected ? (
-                <button
-                  type="button"
-                  className="wallet-btn"
-                  onClick={() =>
-                    connect({
-                      connector: connectors[0],
-                    })
-                  }
-                >
-                  Connect
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="wallet-btn connected"
-                  onClick={disconnect}
-                >
-                  Connected
-                </button>
-              )}
-            </div>
+            <input
+              type="text"
+              placeholder="Wallet Address"
+              value={walletAddress}
+              onChange={(e) =>
+                setWalletAddress(e.target.value)
+              }
+              required
+            />
             <input
               type="password"
               placeholder="Password"
@@ -72,7 +74,7 @@ function StudentLogin() {
             </button>
           </form>
           <div className="auth-footer">
-            Don't have an account?
+            Don't have an account?{" "}
             <Link to="/student/signup">
               Sign Up
             </Link>

@@ -1,12 +1,8 @@
-export const getCertificates =async () => {
-  return [];
-};
-export const verifyCertificate =async (tokenId) => {
-  return null;
-};
-export const issueCertificate =async (certificateData) => {
-  return null;
-};
-export const revokeCertificate =async (tokenId) => {
-  return null;
-};
+import axios from "axios";
+const API = axios.create({
+  baseURL: "http://localhost:5000/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+export default API;

@@ -1,31 +1,63 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useAccount,useConnect,useDisconnect,} from "wagmi";
 import Navbar from "../components/Navbar";
 import "../styles/Auth.css";
+import { signupInstitute } from "../services/instituteAuth";
+import { useEffect } from "react";
 function InstituteSignup() {
-  const [instituteName, setInstituteName] =useState("");
-  const [password, setPassword] =useState("");
-  const [confirmPassword, setConfirmPassword] =useState("");
+  const navigate = useNavigate();
+  useEffect(() => {
+  const institute = localStorage.getItem("institute");
+
+  if (institute) {
+    navigate("/institute/dashboard");
+  }
+  }, [navigate]);
+  const [instituteName, setInstituteName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
-  const handleSignup = (e) => {e.preventDefault();
+  const metaMaskConnector = connectors.find(
+    (connector) =>
+      connector.name.toLowerCase().includes("metamask")
+  );
+  const handleConnectWallet = () => {
+    if (!metaMaskConnector) {
+      alert("MetaMask connector not found.");
+      return;
+    }
+    connect({
+      connector: metaMaskConnector,
+    });
+  };
+  const handleSignup = async (e) => {
+    e.preventDefault();
     if (!isConnected) {
       alert("Please connect MetaMask.");
       return;
     }
-
     if (password !== confirmPassword) {
       alert("Passwords do not match.");
       return;
     }
-
-    console.log({
-      instituteName,
-      walletAddress: address,
-      password,
-    });
+    try {
+      const response = await signupInstitute({
+        instituteName,
+        walletAddress: address,
+        password,
+      });
+      alert(response.message);
+      navigate("/institute/login");
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.response?.data?.message ||
+          "Signup Failed"
+      );
+    }
   };
   return (
     <>
@@ -42,9 +74,7 @@ function InstituteSignup() {
               placeholder="Institute Name"
               value={instituteName}
               onChange={(e) =>
-                setInstituteName(
-                  e.target.value
-                )
+                setInstituteName(e.target.value)
               }
               required
             />
@@ -59,13 +89,9 @@ function InstituteSignup() {
                 <button
                   type="button"
                   className="wallet-btn"
-                  onClick={() =>
-                    connect({
-                      connector: connectors[0],
-                    })
-                  }
+                  onClick={handleConnectWallet}
                 >
-                  Connect
+                  Connect MetaMask
                 </button>
               ) : (
                 <button
@@ -73,7 +99,7 @@ function InstituteSignup() {
                   className="wallet-btn connected"
                   onClick={disconnect}
                 >
-                  Connected
+                  Connected ✓
                 </button>
               )}
             </div>
@@ -91,9 +117,7 @@ function InstituteSignup() {
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) =>
-                setConfirmPassword(
-                  e.target.value
-                )
+                setConfirmPassword(e.target.value)
               }
               required
             />
@@ -102,7 +126,7 @@ function InstituteSignup() {
             </button>
           </form>
           <div className="auth-footer">
-            Already have an account?
+            Already have an account?{" "}
             <Link to="/institute/login">
               Login
             </Link>

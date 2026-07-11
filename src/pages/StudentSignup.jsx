@@ -3,29 +3,48 @@ import { Link } from "react-router-dom";
 import {useAccount,useConnect,useDisconnect,} from "wagmi";
 import Navbar from "../components/Navbar";
 import "../styles/Auth.css";
+import { signupStudent } from "../services/studentAuth";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 function StudentSignup() {
   const [name, setName] = useState("");
+  const navigate=useNavigate()
+  useEffect(() => {
+  const student = localStorage.getItem("student");
+  if (student) {
+    navigate("/student/dashboard");
+  }
+  }, [navigate]);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
-  const handleSignup = (e) => {
-    e.preventDefault();
-    if (!isConnected) {
-      alert("Please connect MetaMask.");
-      return;
-    }
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
-    console.log({
+   const handleSignup = async (e) => {
+  e.preventDefault();
+  if (!isConnected) {
+    alert("Please connect MetaMask.");
+    return;
+  }
+  if (password !== confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
+  try {
+    const response = await signupStudent({
       name,
       walletAddress: address,
       password,
     });
-  };
+    alert(response.message);
+    navigate("/student/login");
+  } catch (error) {
+    alert(
+      error.response?.data?.message ||
+      "Signup Failed"
+    );
+  }
+};
   return (
     <>
       <Navbar />

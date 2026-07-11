@@ -1,10 +1,18 @@
+import { Navigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import CertificateCard from "../components/CertificateCard";
 import useStudent from "../hooks/useStudent";
 import useCertificate from "../hooks/useCertificate";
 import "../styles/Dashboard.css";
+import LogoutButton from "../components/LogoutButton";
 function StudentDashboard() {
-  const studentName = "Smarth";
+  const student = JSON.parse(
+    localStorage.getItem("student")
+  );
+  if (!student) {
+    return <Navigate to="/student/login" replace />;
+  }
+  const studentName = student.name;
   const {
     data: certificateIds,
     isLoading,
@@ -19,19 +27,26 @@ function StudentDashboard() {
           </h2>
           <div className="dashboard-top">
             <h1>Student Dashboard</h1>
+             <LogoutButton />
           </div>
           <p>
             View all certificates issued to your account.
           </p>
         </div>
         {isLoading && (
-          <p>Loading certificates...</p>
+          <div className="loading-box">
+            <p>Loading certificates...</p>
+          </div>
         )}
         {!isLoading &&
-          certificateIds?.length === 0 && (
-            <p>
-              No certificates found.
-            </p>
+          (!certificateIds || certificateIds.length === 0) && (
+            <div className="empty-state">
+              <h3>No Certificates Yet</h3>
+              <p>
+                Certificates issued by your institute
+                will appear here.
+              </p>
+            </div>
           )}
         <div className="certificate-grid">
           {certificateIds?.map((id) => (
@@ -51,7 +66,11 @@ function CertificateItem({ certificateId }) {
     isLoading,
   } = useCertificate(certificateId);
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="loading-box">
+        Loading...
+      </div>
+    );
   }
   if (!certificate) {
     return null;

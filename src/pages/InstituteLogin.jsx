@@ -1,22 +1,65 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useAccount,useConnect,useDisconnect,} from "wagmi";
 import Navbar from "../components/Navbar";
+import { loginInstitute } from "../services/instituteAuth";
 import "../styles/Auth.css";
+import { useEffect } from "react";
 function InstituteLogin() {
-  const [password, setPassword] =useState("");
-  const { address, isConnected } =useAccount();
-  const { connect, connectors } =useConnect();
-  const { disconnect } =useDisconnect();
-  const handleLogin = (e) => {e.preventDefault();
+  const navigate = useNavigate();
+  useEffect(() => {
+  const institute = localStorage.getItem("institute");
+  if (institute) {
+    navigate("/institute/dashboard");
+  }
+ }, [navigate]);
+  const [password, setPassword] = useState("");
+  const { address, isConnected } = useAccount();
+  const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
+  const metaMaskConnector = connectors.find(
+    (connector) =>
+      connector.name.toLowerCase().includes("metamask")
+  );
+  const handleConnectWallet = () => {
+    if (!metaMaskConnector) {
+      alert("MetaMask connector not found.");
+      return;
+    }
+    connect({
+      connector: metaMaskConnector,
+    });
+  };
+  const handleLogin = async (e) => {
+    e.preventDefault();
     if (!isConnected) {
       alert("Please connect MetaMask.");
       return;
     }
-    console.log({
-      walletAddress: address,
-      password,
-    });
+    try {
+      const response = await loginInstitute({
+        walletAddress: address,
+        password,
+      });
+      localStorage.setItem(
+        "token",
+        response.token
+      );
+      localStorage.setItem(
+        "institute",
+        JSON.stringify(
+          response.institute
+        )
+      );
+      alert(response.message);
+      navigate("/institute/dashboard");
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.response?.data?.message ||
+        "Login Failed"
+      );
+    }
   };
   return (
     <>
@@ -39,13 +82,9 @@ function InstituteLogin() {
                 <button
                   type="button"
                   className="wallet-btn"
-                  onClick={() =>
-                    connect({
-                      connector: connectors[0],
-                    })
-                  }
+                  onClick={handleConnectWallet}
                 >
-                  Connect
+                  Connect MetaMask
                 </button>
               ) : (
                 <button
@@ -53,7 +92,7 @@ function InstituteLogin() {
                   className="wallet-btn connected"
                   onClick={disconnect}
                 >
-                  Connected
+                  Connected ✓
                 </button>
               )}
             </div>
@@ -71,7 +110,7 @@ function InstituteLogin() {
             </button>
           </form>
           <div className="auth-footer">
-            Don't have an account?
+            Don't have an account?{" "}
             <Link to="/institute/signup">
               Sign Up
             </Link>
