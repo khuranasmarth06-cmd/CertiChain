@@ -21,8 +21,8 @@ function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/developer">
-              Developer
+            <Link to="/admin">
+              Admin
             </Link>
           </li>
         </ul>
@@ -74,11 +74,11 @@ function Navbar() {
         </Link>
 
         <Link
-          to="/developer"
+          to="/admin"
           onClick={() => setMenuOpen(false)}
         >
           <FaCode />
-          <span>Developer</span>
+          <span>Admin</span>
         </Link>
         <div className="sidebar-footer">
           <p>CertChain v1.0</p>

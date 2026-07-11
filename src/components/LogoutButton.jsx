@@ -5,6 +5,7 @@ function LogoutButton() {
     localStorage.removeItem("token");
     localStorage.removeItem("student");
     localStorage.removeItem("institute");
+    localStorage.removeItem("admin");
     navigate("/");
   };
   return (

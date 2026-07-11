@@ -1,13 +1,15 @@
 import Navbar from "../components/Navbar";
-import "../styles/Developer.css";
+import "../styles/Admin.css";
+import { useNavigate } from "react-router-dom";
 function Developer() {
+  const navigate = useNavigate();
   return (
     <>
       <Navbar />
       <div className="developer-page">
         <div className="developer-card">
           <h1>
-            About the Developer
+            About the Admin
           </h1>
           <div className="developer-info">
             <h2>
@@ -48,7 +50,7 @@ function Developer() {
           </div>
           <div className="developer-message">
             <h3>
-              Developer Message
+              Admin Message
             </h3>
             <p>
               Thank you for visiting CertChain.
@@ -66,6 +68,13 @@ function Developer() {
               institutions issue and verify
               academic credentials.
             </p>
+          </div>
+          <div className="admin-dashboard-btn">
+            <button
+              onClick={() => navigate("/admin/login")}
+            >
+              Go to Admin Dashboard
+            </button>
           </div>
         </div>
       </div>

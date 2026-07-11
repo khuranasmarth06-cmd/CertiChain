@@ -2,7 +2,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Platform from "./pages/Platform";
 import Verify from "./pages/Verify";
-import Developer from "./pages/Developer";
+import Admin from "./pages/Admin";
 import StudentDashboard from "./pages/StudentDashboard";
 import InstituteDashboard from "./pages/InstituteDashboard";
 import StudentLogin from "./pages/StudentLogin";
@@ -14,6 +14,9 @@ import CompanySignup from "./pages/CompanySignup";
 import NotFound from "./pages/NotFound";
 import StudentProtectedRoute from "./components/StudentProtectedRoute";
 import InstituteProtectedRoute from "./components/InstituteProtectedRoute";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminProtectedRoute from "./components/AdminProtectedRoute";
 function App() {
   return (
     <HashRouter>
@@ -67,8 +70,8 @@ function App() {
           element={<Platform />}
         />
         <Route
-          path="/developer"
-          element={<Developer />}
+          path="/admin"
+          element={<Admin />}
         />
         <Route
           path="/verify"
@@ -77,6 +80,19 @@ function App() {
         <Route
           path="*"
           element={<NotFound />}
+        />
+        <Route
+          path="/admin/login"
+          element={<AdminLogin />}
+        />
+
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboard />
+            </AdminProtectedRoute>
+          }
         />
       </Routes>
     </HashRouter>
