@@ -2,7 +2,8 @@ import StatusBadge from "./StatusBadge";
 import { QRCodeCanvas } from "qrcode.react";
 function CertificateCard({ certificate }) {
   const certificateId = Number(certificate.id);
-const verificationUrl =`${window.location.origin}/verify?certificateId=${certificateId}`;  const copyLink = () => {
+const verificationUrl =`${import.meta.env.VITE_FRONTEND_URL}/#/verify?certificateId=${certificateId}`;
+  const copyLink = () => {
     navigator.clipboard.writeText(verificationUrl);
     alert("Verification link copied!");
   };
