@@ -3,10 +3,11 @@ import LogoutButton from "../components/LogoutButton";
 import usePendingInstitutes from "../hooks/usePendingInstitutes";
 import { approveInstitute } from "../services/adminAuth";
 import { addInstitute } from "../services/contractService";
+import useApprovedInstitutes from "../hooks/useApprovedInstitutes";
 import "../styles/Dashboard.css";
 function AdminDashboard() {
   const { institutes, loading } = usePendingInstitutes();
-
+  const { institutes: approvedInstitutes, loading: approvedLoading, } = useApprovedInstitutes();
   const handleApprove = async (walletAddress) => {
     try {
       const txHash = await addInstitute(walletAddress);
@@ -79,6 +80,42 @@ function AdminDashboard() {
                     </td>
                   </tr>
                 ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+        <div className="table-section">
+          <h2>Approved Institutes</h2>
+          {approvedLoading ? (
+            <p>Loading...</p>
+          ) : approvedInstitutes.length === 0 ? (
+            <p>No approved institutes.</p>
+          ) : (
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Institute</th>
+                  <th>Wallet</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {approvedInstitutes.map(
+                  (institute) => (
+                    <tr key={institute._id}>
+                      <td>
+                        {institute.instituteName}
+                      </td>
+
+                      <td>
+                        {`${institute.walletAddress.slice(0,6)}...${institute.walletAddress.slice(-4)}`}
+                      </td>
+                      <td>
+                        Approved
+                      </td>
+                    </tr>
+                  )
+                )}
               </tbody>
             </table>
           )}

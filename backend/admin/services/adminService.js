@@ -20,3 +20,8 @@ export const approveInstitute = async (walletAddress) => {
   }
   return institute;
 };
+export const getApprovedInstitutes = async () => {
+  return await Institute.find({
+    status: "Approved",
+  }).select("-password");
+};

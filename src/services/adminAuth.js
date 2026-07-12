@@ -22,3 +22,10 @@ export const approveInstitute = async (walletAddress) => {
   );
   return response.data;
 };
+export const getApprovedInstitutes =async () => {
+    const response = await API.get(
+      "/admin/approved-institutes"
+    );
+
+    return response.data.institutes;
+  };
