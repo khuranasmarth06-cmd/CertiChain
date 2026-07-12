@@ -6,3 +6,10 @@ export const loginAdmin = async (loginData) => {
   );
   return response.data;
 };
+export const getPendingInstitutes = async () => {
+  const response = await API.get(
+    "/admin/pending-institutes"
+  );
+
+  return response.data.institutes;
+};

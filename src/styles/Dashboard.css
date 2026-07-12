@@ -144,3 +144,21 @@
 .logout-btn:hover {
   background: #dc2626;
 }
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.admin-table th,
+.admin-table td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+.admin-table th {
+  background: #2563eb;
+  color: white;
+}
+.admin-table tr:hover {
+  background: rgba(37, 99, 235, 0.08);
+}
