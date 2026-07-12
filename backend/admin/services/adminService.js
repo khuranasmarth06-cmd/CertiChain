@@ -4,7 +4,6 @@ export const getPendingInstitutes = async () => {
     status: "Pending",
   }).select("-password");
 };
-
 export const approveInstitute = async (walletAddress) => {
   const institute = await Institute.findOneAndUpdate(
     { walletAddress },
