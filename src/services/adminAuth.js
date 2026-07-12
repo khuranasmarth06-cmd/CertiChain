@@ -13,3 +13,12 @@ export const getPendingInstitutes = async () => {
 
   return response.data.institutes;
 };
+export const approveInstitute = async (walletAddress) => {
+  const response = await API.patch(
+    "/admin/approve-institute",
+    {
+      walletAddress,
+    }
+  );
+  return response.data;
+};

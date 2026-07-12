@@ -1,12 +1,30 @@
 import Navbar from "../components/Navbar";
 import LogoutButton from "../components/LogoutButton";
-import "../styles/Dashboard.css";
 import usePendingInstitutes from "../hooks/usePendingInstitutes";
+import { approveInstitute } from "../services/adminAuth";
+import { addInstitute } from "../services/contractService";
+import "../styles/Dashboard.css";
 function AdminDashboard() {
-  const admin = JSON.parse(
-    localStorage.getItem("admin")
-  );
   const { institutes, loading } = usePendingInstitutes();
+
+  const handleApprove = async (walletAddress) => {
+    try {
+      const txHash = await addInstitute(walletAddress);
+      await approveInstitute(walletAddress);
+      alert(
+        `Institute Approved Successfully!\n\nTransaction Hash:\n${txHash}`
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.shortMessage ||
+        error.response?.data?.message ||
+        error.message ||
+        "Approval Failed"
+      );
+    }
+  };
   return (
     <>
       <Navbar />
@@ -22,47 +40,48 @@ function AdminDashboard() {
           <p>
             Manage institutes and platform.
           </p>
-          <div className="table-section">
-            <h2>
-              Pending Institute Requests
-            </h2>
-
-            {loading ? (
-              <p>Loading...</p>
-            ) : institutes.length === 0 ? (
-              <p>
-                No pending requests.
-              </p>
-            ) : (
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>Institute</th>
-                    <th>Wallet</th>
-                    <th>Status</th>
+        </div>
+        <div className="table-section">
+          <h2>Pending Institute Requests</h2>
+          {loading ? (
+            <p>Loading...</p>
+          ) : institutes.length === 0 ? (
+            <p>No pending requests.</p>
+          ) : (
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Institute</th>
+                  <th>Wallet</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {institutes.map((institute) => (
+                  <tr key={institute._id}>
+                    <td>{institute.instituteName}</td>
+                    <td>
+                      {`${institute.walletAddress.slice(0, 6)}...${institute.walletAddress.slice(-4)}`}
+                    </td>
+                    <td>{institute.status}</td>
+                    <td>
+                      <button
+                        className="approve-btn"
+                        onClick={() =>
+                          handleApprove(
+                            institute.walletAddress
+                          )
+                        }
+                      >
+                        Approve
+                      </button>
+                    </td>
                   </tr>
-                </thead>
-
-                <tbody>
-                  {institutes.map(
-                    (institute) => (
-                      <tr key={institute._id}>
-                        <td>
-                          {institute.instituteName}
-                        </td>
-                        <td>
-                          {`${institute.walletAddress.slice(0,6)}...${institute.walletAddress.slice(-4)}`}
-                        </td>
-                        <td>
-                          {institute.status}
-                        </td>
-                      </tr>
-                    )
-                  )}
-                </tbody>
-              </table>
-            )}
-          </div>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </>

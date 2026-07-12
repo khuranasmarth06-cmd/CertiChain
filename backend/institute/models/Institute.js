@@ -17,13 +17,15 @@ const instituteSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: String,
+      enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending",
+    },
   },
   {
     timestamps: true,
   }
 );
-const Institute = mongoose.model(
-  "Institute",
-  instituteSchema
-);
+const Institute =mongoose.models.Institute ||mongoose.model("Institute", instituteSchema);
 export default Institute;
