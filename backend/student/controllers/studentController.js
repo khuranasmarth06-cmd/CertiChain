@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import Student from "../models/student.js";
+import Student from "../models/Student.js";
 import generateToken from "../../utils/generateToken.js";
 export const signupStudent = async (req, res) => {
   try {
