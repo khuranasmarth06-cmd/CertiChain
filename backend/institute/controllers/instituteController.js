@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import Institute from "../models/Institute.js";
+import Institute from "../models/institute.js";
 import generateToken from "../../utils/generateToken.js";
 export const signupInstitute = async (req, res) => {
   try {

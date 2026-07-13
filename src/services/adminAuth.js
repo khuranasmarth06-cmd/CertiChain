@@ -29,3 +29,12 @@ export const getApprovedInstitutes =async () => {
 
     return response.data.institutes;
   };
+  export const rejectInstitute = async (walletAddress) => {
+  const response = await API.patch(
+    "/admin/reject-institute",
+    {
+      walletAddress,
+    }
+  );
+  return response.data;
+};

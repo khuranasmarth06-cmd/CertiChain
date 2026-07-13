@@ -1,13 +1,13 @@
 import Navbar from "../components/Navbar";
 import LogoutButton from "../components/LogoutButton";
 import usePendingInstitutes from "../hooks/usePendingInstitutes";
-import { approveInstitute } from "../services/adminAuth";
-import { addInstitute } from "../services/contractService";
 import useApprovedInstitutes from "../hooks/useApprovedInstitutes";
+import { approveInstitute, rejectInstitute } from "../services/adminAuth";
+import { addInstitute } from "../services/contractService";
 import "../styles/Dashboard.css";
 function AdminDashboard() {
   const { institutes, loading } = usePendingInstitutes();
-  const { institutes: approvedInstitutes, loading: approvedLoading, } = useApprovedInstitutes();
+  const {institutes: approvedInstitutes,loading: approvedLoading,} = useApprovedInstitutes();
   const handleApprove = async (walletAddress) => {
     try {
       const txHash = await addInstitute(walletAddress);
@@ -20,9 +20,23 @@ function AdminDashboard() {
       console.error(error);
       alert(
         error.shortMessage ||
+          error.response?.data?.message ||
+          error.message ||
+          "Approval Failed"
+      );
+    }
+  };
+  const handleReject = async (walletAddress) => {
+    try {
+      await rejectInstitute(walletAddress);
+      alert("Institute Rejected Successfully.");
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      alert(
         error.response?.data?.message ||
-        error.message ||
-        "Approval Failed"
+          error.message ||
+          "Reject Failed"
       );
     }
   };
@@ -38,9 +52,7 @@ function AdminDashboard() {
             <h1>Admin Dashboard</h1>
             <LogoutButton />
           </div>
-          <p>
-            Manage institutes and platform.
-          </p>
+          <p>Manage institutes and platform.</p>
         </div>
         <div className="table-section">
           <h2>Pending Institute Requests</h2>
@@ -63,20 +75,32 @@ function AdminDashboard() {
                   <tr key={institute._id}>
                     <td>{institute.instituteName}</td>
                     <td>
-                      {`${institute.walletAddress.slice(0, 6)}...${institute.walletAddress.slice(-4)}`}
+                      {`${institute.walletAddress.slice(0,6)}...${institute.walletAddress.slice(-4)}`}
                     </td>
                     <td>{institute.status}</td>
                     <td>
-                      <button
-                        className="approve-btn"
-                        onClick={() =>
-                          handleApprove(
-                            institute.walletAddress
-                          )
-                        }
-                      >
-                        Approve
-                      </button>
+                      <div className="action-buttons">
+                        <button
+                          className="approve-btn"
+                          onClick={() =>
+                            handleApprove(
+                              institute.walletAddress
+                            )
+                          }
+                        >
+                          Approve
+                        </button>
+                        <button
+                          className="reject-btn"
+                          onClick={() =>
+                            handleReject(
+                              institute.walletAddress
+                            )
+                          }
+                        >
+                          Reject
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -100,22 +124,15 @@ function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {approvedInstitutes.map(
-                  (institute) => (
-                    <tr key={institute._id}>
-                      <td>
-                        {institute.instituteName}
-                      </td>
-
-                      <td>
-                        {`${institute.walletAddress.slice(0,6)}...${institute.walletAddress.slice(-4)}`}
-                      </td>
-                      <td>
-                        Approved
-                      </td>
-                    </tr>
-                  )
-                )}
+                {approvedInstitutes.map((institute) => (
+                  <tr key={institute._id}>
+                    <td>{institute.instituteName}</td>
+                    <td>
+                      {`${institute.walletAddress.slice(0,6)}...${institute.walletAddress.slice(-4)}`}
+                    </td>
+                    <td>Approved</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           )}
