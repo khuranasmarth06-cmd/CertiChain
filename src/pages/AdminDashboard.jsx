@@ -1,13 +1,17 @@
 import Navbar from "../components/Navbar";
 import LogoutButton from "../components/LogoutButton";
+import StatCard from "../components/StatCard";
 import usePendingInstitutes from "../hooks/usePendingInstitutes";
 import useApprovedInstitutes from "../hooks/useApprovedInstitutes";
+import useCertificateCount from "../hooks/useCertificateCount";
 import { approveInstitute, rejectInstitute } from "../services/adminAuth";
 import { addInstitute } from "../services/contractService";
+import { FaCertificate, FaHourglassHalf, FaUniversity } from "react-icons/fa";
 import "../styles/Dashboard.css";
 function AdminDashboard() {
   const { institutes, loading } = usePendingInstitutes();
   const {institutes: approvedInstitutes,loading: approvedLoading,} = useApprovedInstitutes();
+  const { count: certificateCount, loading: certificateLoading } = useCertificateCount();
   const handleApprove = async (walletAddress) => {
     try {
       const txHash = await addInstitute(walletAddress);
@@ -53,6 +57,29 @@ function AdminDashboard() {
             <LogoutButton />
           </div>
           <p>Manage institutes and platform.</p>
+        </div>
+        <div className="stats-grid">
+          <StatCard
+            icon={<FaCertificate />}
+            label="Certificates Issued"
+            value={certificateCount}
+            loading={certificateLoading}
+            variant="primary"
+          />
+          <StatCard
+            icon={<FaHourglassHalf />}
+            label="Pending Requests"
+            value={institutes.length}
+            loading={loading}
+            variant="warning"
+          />
+          <StatCard
+            icon={<FaUniversity />}
+            label="Institutes Approved"
+            value={approvedInstitutes.length}
+            loading={approvedLoading}
+            variant="success"
+          />
         </div>
         <div className="table-section">
           <h2>Pending Institute Requests</h2>
