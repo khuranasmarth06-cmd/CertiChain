@@ -46,7 +46,7 @@ function AdminDashboard() {
       <div className="dashboard">
         <div className="dashboard-header">
           <h2 className="welcome-text">
-            👋 Welcome, Admin
+            Welcome back, Admin
           </h2>
           <div className="dashboard-top">
             <h1>Admin Dashboard</h1>
