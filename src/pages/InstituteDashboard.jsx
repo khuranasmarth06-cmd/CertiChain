@@ -82,7 +82,7 @@ function InstituteDashboard() {
       <div className="dashboard">
         <div className="dashboard-header">
           <h2 className="welcome-text">
-            👋 Welcome, {instituteName}
+            Welcome back, {instituteName}
           </h2>
           <div className="dashboard-top">
             <h1>Institute Dashboard</h1>
