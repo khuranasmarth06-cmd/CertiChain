@@ -23,7 +23,7 @@ function StudentDashboard() {
       <div className="dashboard">
         <div className="dashboard-header">
           <h2 className="welcome-text">
-            👋 Welcome, {studentName}
+            Welcome back, {studentName}
           </h2>
           <div className="dashboard-top">
             <h1>Student Dashboard</h1>
