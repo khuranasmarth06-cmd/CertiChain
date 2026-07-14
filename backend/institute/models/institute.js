@@ -27,5 +27,5 @@ const instituteSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const Institute =mongoose.models.institute ||mongoose.model("Institute", instituteSchema);
+const institute =mongoose.models.institute ||mongoose.model("Institute", instituteSchema);
 export default institute;
