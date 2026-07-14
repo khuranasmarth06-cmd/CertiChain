@@ -1,18 +1,16 @@
+import { FaCheckCircle, FaBan, FaClock } from "react-icons/fa";
+
 function StatusBadge({ status }) {
-  const getStatusClass = () => {
-    switch (status) {
-      case "Active":
-        return "status active";
-      case "Revoked":
-        return "status revoked";
-      case "Expired":
-        return "status expired";
-      default:
-        return "status";
-    }
+  const config = {
+    Active: { className: "status active", icon: <FaCheckCircle /> },
+    Revoked: { className: "status revoked", icon: <FaBan /> },
+    Expired: { className: "status expired", icon: <FaClock /> },
   };
+  const { className, icon } = config[status] || { className: "status", icon: null };
+
   return (
-    <span className={getStatusClass()}>
+    <span className={className}>
+      {icon}
       {status}
     </span>
   );

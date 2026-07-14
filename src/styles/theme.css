@@ -1,46 +1,106 @@
+/* =========================================================
+   CertiChain — "Registrar's Ledger" design system
+   A credential lives twice: once as a document, once as a
+   record. The palette borrows from ledger ink and sealed
+   paper; the accent is a foil/brass seal, not a UI blue.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
 :root {
-  --background: #f8fafc;
-  --surface: #ffffff;
+  /* ---- type ---- */
+  --font-display: "Source Serif 4", Georgia, serif;
+  --font-body: "IBM Plex Sans", -apple-system, Segoe UI, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
-  --text: #111827;
-  --secondary-text: #6b7280;
+  /* ---- surfaces (light / "day ledger") ---- */
+  --background: #eef1ea;
+  --background-alt: #e4e8de;
+  --surface: #fdfdfb;
+  --surface-raised: #ffffff;
 
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
+  /* ---- ink ---- */
+  --text: #1c2333;
+  --secondary-text: #5b6373;
+  --faint-text: #8a91a0;
 
-  --accent: #3b82f6;
+  /* ---- brass / seal accent (primary) ---- */
+  --primary: #a8752f;
+  --primary-hover: #8f6125;
+  --primary-tint: rgba(168, 117, 47, 0.12);
 
-  --border: #e5e7eb;
+  /* ---- ink navy (secondary structural color) ---- */
+  --ink: #1c2740;
+  --ink-tint: rgba(28, 39, 64, 0.06);
 
-  --success: #22c55e;
-  --danger: #ef4444;
+  --border: #d9dcc9;
+  --hairline: #cbcfba;
 
-  --shadow: rgba(0, 0, 0, 0.08);
+  /* ---- ledger status inks ---- */
+  --success: #21694a;
+  --success-tint: rgba(33, 105, 74, 0.12);
+  --danger: #a13a2c;
+  --danger-tint: rgba(161, 58, 44, 0.12);
+  --warning: #a9760e;
+  --warning-tint: rgba(169, 118, 14, 0.12);
+
+  --shadow: rgba(28, 35, 51, 0.10);
+
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 18px;
 }
+
 body[data-theme="dark"] {
-  --background: #050816;
-  --surface: #111827;
-  --text: #f9fafb;
-  --secondary-text: #9ca3af;
-  --primary: #2563eb;
-  --primary-hover: #3b82f6;
-  --accent: #60a5fa;
-  --border: #1f2937;
-  --success: #22c55e;
-  --danger: #ef4444;
-  --shadow: rgba(0, 0, 0, 0.45);
+  --background: #0e1420;
+  --background-alt: #131a29;
+  --surface: #161f30;
+  --surface-raised: #1b2537;
+
+  --text: #eceadf;
+  --secondary-text: #9aa1b0;
+  --faint-text: #6c7385;
+
+  --primary: #d8a24f;
+  --primary-hover: #e6b569;
+  --primary-tint: rgba(216, 162, 79, 0.14);
+
+  --ink: #dfe3ee;
+  --ink-tint: rgba(223, 227, 238, 0.08);
+
+  --border: #29334a;
+  --hairline: #262f45;
+
+  --success: #4fa87c;
+  --success-tint: rgba(79, 168, 124, 0.16);
+  --danger: #e2705e;
+  --danger-tint: rgba(226, 112, 94, 0.16);
+  --warning: #d9a63f;
+  --warning-tint: rgba(217, 166, 63, 0.16);
+
+  --shadow: rgba(0, 0, 0, 0.5);
 }
-html,
-body {
+
+html, body {
   margin: 0;
   padding: 0;
 }
+
 body {
+  font-family: var(--font-body);
   background: var(--background);
   color: var(--text);
-  transition:
-    background 0.35s ease,
-    color 0.35s ease;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+code, .mono {
+  font-family: var(--font-mono);
 }
 
 a {
@@ -48,13 +108,63 @@ a {
   text-decoration: none;
 }
 
-button,
-input,
-textarea,
-select {
+button, input, textarea, select {
+  font-family: var(--font-body);
   transition: all 0.3s ease;
 }
 
 button {
   cursor: pointer;
+}
+
+/* Reusable seal-styled primary button */
+.btn-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #1c1305;
+  font-weight: 600;
+  font-family: var(--font-body);
+  padding: 13px 22px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.08) inset;
+}
+
+.btn-seal:hover {
+  background: var(--primary-hover);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text);
+  font-weight: 600;
+  padding: 12px 22px;
+}
+
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Fine hairline "guilloché" rule used as a section divider,
+   nodding to the engraved border on printed certificates. */
+.ledger-rule {
+  height: 1px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--hairline) 0px,
+    var(--hairline) 4px,
+    transparent 4px,
+    transparent 9px
+  );
+  border: none;
 }

@@ -1,3 +1,4 @@
+import { FaMoon, FaSun } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
@@ -7,7 +8,7 @@ function ThemeToggle() {
       onClick={toggleTheme}
       aria-label="Toggle Theme"
     >
-      {theme === "light" ? "🌙" : "☀️"}
+      {theme === "light" ? <FaMoon /> : <FaSun />}
     </button>
   );
 }

@@ -30,7 +30,7 @@
   background: var(--surface);
   color: var(--text);
   padding: 30px;
-  border-radius: 16px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
   box-shadow: 0 6px 18px var(--shadow);
   display: grid;
@@ -38,15 +38,15 @@
 }
 .issue-form h2 {
   color: var(--text);
-  font-size: 24px;
+  font-size: 23px;
   margin-bottom: 10px;
 }
 .issue-form input {
   width: 100%;
   padding: 14px 16px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--background);
   color: var(--text);
   font-size: 15px;
 }
@@ -61,9 +61,9 @@
   width: 220px;
   padding: 14px;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   background: var(--primary);
-  color: white;
+  color: #1c1305;
   font-weight: 600;
 }
 .issue-form button:hover {
@@ -74,7 +74,7 @@
   border-collapse: collapse;
   background: var(--surface);
   color: var(--text);
-  border-radius: 12px;
+  border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--border);
   box-shadow: 0 4px 12px var(--shadow);
@@ -88,21 +88,36 @@
 }
 .certificate-table th {
   background: var(--background);
-  color: var(--text);
-  font-size: 15px;
+  color: var(--secondary-text);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  font-weight: 600;
 }
 .certificate-table tr:hover {
-  background: rgba(37, 99, 235, 0.08);
+  background: var(--primary-tint);
+}
+.revoke-btn,
+.expire-btn {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  color: white;
+  font-weight: 600;
+  margin-right: 6px;
 }
 .revoke-btn {
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
   background: var(--danger);
-  color: white;
 }
 .revoke-btn:hover {
-  opacity: 0.9;
+  opacity: 0.88;
+}
+.expire-btn {
+  background: var(--warning);
+  color: #241b03;
+}
+.expire-btn:hover {
+  opacity: 0.88;
 }
 .qr-section {
   margin-top: 20px;
@@ -112,7 +127,7 @@
   margin-top: 10px;
   padding: 10px;
   background: white;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
 }
 .qr-text {
@@ -121,8 +136,9 @@
   font-size: 14px;
 }
 .welcome-text {
+  font-family: var(--font-display);
   font-size: 1.7rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text);
   margin-bottom: 12px;
 }
@@ -130,73 +146,93 @@
 .welcome-text span {
   color: var(--primary);
 }
+.connect-wallet-btn {
+  border: none;
+  background: var(--primary);
+  color: #1c1305;
+  font-weight: 600;
+  padding: 11px 20px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.connect-wallet-btn:hover {
+  background: var(--primary-hover);
+}
+.wallet-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 8px 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.wallet-info span {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text);
+}
+.wallet-info button {
+  border: none;
+  background: var(--danger);
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+}
+.wallet-info button:hover {
+  opacity: 0.88;
+}
 .logout-btn {
-  background: #ef4444;
+  background: var(--danger);
   color: white;
   border: none;
   padding: 10px 18px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 600;
   transition: 0.3s;
 }
 
 .logout-btn:hover {
-  background: #dc2626;
+  opacity: 0.88;
 }
 .admin-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 .admin-table th,
 .admin-table td {
   padding: 14px;
   text-align: center;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border);
 }
 .admin-table th {
-  background: #2563eb;
-  color: white;
+  background: var(--ink);
+  color: var(--surface);
 }
 .admin-table tr:hover {
-  background: rgba(37, 99, 235, 0.08);
+  background: var(--primary-tint);
 }
-.admin-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.admin-table th,
-.admin-table td {
-  padding: 14px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-}
-
-.admin-table th {
-  background: #2563eb;
-  color: white;
-}
-
-.admin-table tr:hover {
-  background: rgba(37, 99, 235, 0.08);
-}
-
 .approve-btn {
-  background: #22c55e;
+  background: var(--success);
   color: white;
   border: none;
   padding: 8px 18px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 600;
   transition: 0.3s;
 }
 
 .approve-btn:hover {
-  background: #16a34a;
+  opacity: 0.88;
 }
 .action-buttons {
   display: flex;
@@ -204,15 +240,15 @@
   gap: 10px;
 }
 .reject-btn {
-  background: #ef4444;
+  background: var(--danger);
   color: white;
   border: none;
   padding: 8px 18px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 600;
   transition: 0.3s;
 }
 .reject-btn:hover {
-  background: #dc2626;
+  opacity: 0.88;
 }

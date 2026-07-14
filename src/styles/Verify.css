@@ -38,8 +38,9 @@
   padding: 12px 20px;
   border: none;
   background: var(--primary);
-  color: white;
-  border-radius: 8px;
+  color: #1c1305;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
   transition: 0.3s ease;
 }
 .verify-form button:hover {

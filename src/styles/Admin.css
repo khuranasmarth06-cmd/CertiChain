@@ -11,7 +11,7 @@
   max-width: 850px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: var(--radius);
   padding: 40px;
   box-shadow: 0 6px 18px var(--shadow);
 }
@@ -59,10 +59,10 @@
 
 .admin-dashboard-btn button {
   padding: 12px 28px;
-  background: #2563eb;
-  color: white;
+  background: var(--primary);
+  color: #1c1305;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -70,31 +70,31 @@
 }
 
 .admin-dashboard-btn button:hover {
-  background: #1d4ed8;
+  background: var(--primary-hover);
   transform: translateY(-2px);
 }
 .contact-admin-btn {
-    margin-top: 15px;
-    text-align: center;
+  margin-top: 15px;
+  text-align: center;
 }
 
 .contact-admin-btn button {
-    padding: 12px 28px;
-    background: #10b981;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    transition: 0.3s;
+  padding: 12px 28px;
+  background: var(--success);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: 0.3s;
 }
 
 .contact-admin-btn button:hover {
-    background: #059669;
-    transform: translateY(-2px);
+  opacity: 0.88;
+  transform: translateY(-2px);
 }
 
 .contact-admin-btn a {
-    text-decoration: none;
+  text-decoration: none;
 }
