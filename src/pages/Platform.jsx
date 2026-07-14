@@ -1,80 +1,75 @@
 import Navbar from "../components/Navbar";
+import { FaShieldAlt, FaLink, FaQrcode, FaBolt, FaUniversity, FaCube, FaUserGraduate, FaCheckCircle } from "react-icons/fa";
 import "../styles/Platform.css";
+
 function Platform() {
   return (
     <>
       <Navbar />
       <div className="platform-page">
         <section className="features">
-          <h2>
-            Why Choose CertChain?
-          </h2>
+          <h2>Built for three audiences, one record</h2>
           <p className="feature-subtitle">
-            Built for educational institutions,
-            students and recruiters with security,
-            transparency and instant verification.
+            Institutions issue, students hold, and anyone verifying a
+            credential reads the same immutable entry — no phone calls
+            to the registrar required.
           </p>
           <div className="feature-grid">
-
             <div className="feature-card">
-              <h3>🔒 Tamper Proof</h3>
-              <p>
-                Certificates cannot be modified or forged once issued.
-              </p>
+              <FaShieldAlt className="feature-icon" />
+              <h3>Tamper-evident</h3>
+              <p>Once written, a certificate's data can't be altered or forged — any edit would break the chain.</p>
             </div>
-
             <div className="feature-card">
-              <h3>⛓ Blockchain Security</h3>
-              <p>
-                Certificate data is securely stored on Ethereum.
-              </p>
+              <FaLink className="feature-icon" />
+              <h3>Anchored on Ethereum</h3>
+              <p>Every credential is recorded on-chain, independent of CertiChain's own servers staying online.</p>
             </div>
-
             <div className="feature-card">
-              <h3>📱 QR Verification</h3>
-              <p>
-                Verify certificates instantly using a QR code.
-              </p>
+              <FaQrcode className="feature-icon" />
+              <h3>QR verification</h3>
+              <p>Each certificate carries a scannable code that opens straight to its verification record.</p>
             </div>
-
             <div className="feature-card">
-              <h3>⚡ Instant Verification</h3>
-              <p>
-                Authenticate certificates in just a few seconds.
-              </p>
+              <FaBolt className="feature-icon" />
+              <h3>Verified in seconds</h3>
+              <p>No paperwork, no waiting on an institution's admin office to confirm authenticity.</p>
             </div>
-
           </div>
         </section>
-        <div className="workflow-card">
-          <div className="workflow-icon">🏫</div>
-          <h3>Institute</h3>
-          <p>Issues certificate.</p>
-        </div>
 
-        <div className="workflow-arrow">➜</div>
-
-        <div className="workflow-card">
-          <div className="workflow-icon">⛓</div>
-          <h3>Blockchain</h3>
-          <p>Stores certificate.</p>
-        </div>
-
-        <div className="workflow-arrow">➜</div>
-
-        <div className="workflow-card">
-          <div className="workflow-icon">🎓</div>
-          <h3>Student</h3>
-          <p>Receives certificate.</p>
-        </div>
-
-        <div className="workflow-arrow">➜</div>
-
-        <div className="workflow-card">
-          <div className="workflow-icon">✅</div>
-          <h3>Verification</h3>
-          <p>Verified instantly.</p>
-        </div>
+        <section className="workflow">
+          <h2>How a certificate moves</h2>
+          <p className="workflow-subtitle">
+            Four steps, each one a ledger entry the next step can check.
+          </p>
+          <div className="workflow-grid">
+            <div className="workflow-card">
+              <span className="workflow-step">01</span>
+              <FaUniversity className="workflow-icon" />
+              <h3>Institute issues</h3>
+              <p>A registrar submits the student's record and signs the transaction.</p>
+            </div>
+            <div className="workflow-card">
+              <span className="workflow-step">02</span>
+              <FaCube className="workflow-icon" />
+              <h3>Blockchain stores</h3>
+              <p>The certificate is written to Ethereum with a unique, permanent ID.</p>
+            </div>
+            <div className="workflow-card">
+              <span className="workflow-step">03</span>
+              <FaUserGraduate className="workflow-icon" />
+              <h3>Student receives</h3>
+              <p>The credential appears in the student's dashboard, ready to share.</p>
+            </div>
+            <div className="workflow-card">
+              <span className="workflow-step">04</span>
+              <FaCheckCircle className="workflow-icon" />
+              <h3>Anyone verifies</h3>
+              <p>An ID, wallet address or QR scan confirms it in seconds.</p>
+            </div>
+          </div>
+        </section>
       </div>
     </>
   );
