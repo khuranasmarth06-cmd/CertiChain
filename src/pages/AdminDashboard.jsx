@@ -102,12 +102,12 @@ function AdminDashboard() {
                   <tbody>
                     {institutes.map((institute) => (
                       <tr key={institute._id}>
-                        <td>{institute.instituteName}</td>
-                        <td>
+                        <td data-label="Institute">{institute.instituteName}</td>
+                        <td data-label="Wallet">
                           {`${institute.walletAddress.slice(0,6)}...${institute.walletAddress.slice(-4)}`}
                         </td>
-                        <td>{institute.status}</td>
-                        <td>
+                        <td data-label="Status">{institute.status}</td>
+                        <td data-label="Action">
                           <div className="action-buttons">
                             <button
                               className="approve-btn"
@@ -157,11 +157,11 @@ function AdminDashboard() {
                   <tbody>
                     {approvedInstitutes.map((institute) => (
                       <tr key={institute._id}>
-                        <td>{institute.instituteName}</td>
-                        <td>
+                        <td data-label="Institute">{institute.instituteName}</td>
+                        <td data-label="Wallet">
                           {`${institute.walletAddress.slice(0,6)}...${institute.walletAddress.slice(-4)}`}
                         </td>
-                        <td>Approved</td>
+                        <td data-label="Status">Approved</td>
                       </tr>
                     ))}
                   </tbody>
