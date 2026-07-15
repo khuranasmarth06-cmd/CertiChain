@@ -4,6 +4,8 @@
   color: var(--text);
   min-height: calc(100vh - 80px);
   transition: 0.3s ease;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 .dashboard-header {
   margin-bottom: 30px;
@@ -340,4 +342,43 @@
 }
 .reject-btn:hover {
   opacity: 0.88;
+}
+
+@media (max-width: 600px) {
+  .dashboard {
+    padding: 24px 4%;
+  }
+  .dashboard-top {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .table-scroll {
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .admin-table,
+  .certificate-table {
+    min-width: 480px;
+  }
+  .admin-table th,
+  .admin-table td,
+  .certificate-table th,
+  .certificate-table td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+  .action-buttons {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .approve-btn,
+  .reject-btn,
+  .revoke-btn,
+  .expire-btn {
+    width: 100%;
+    padding: 8px 10px;
+    margin-right: 0;
+    font-size: 13px;
+  }
 }
