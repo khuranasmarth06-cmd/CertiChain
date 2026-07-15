@@ -81,88 +81,94 @@ function AdminDashboard() {
             variant="success"
           />
         </div>
-        <div className="table-section">
-          <h2>Pending Institute Requests</h2>
-          {loading ? (
-            <p>Loading...</p>
-          ) : institutes.length === 0 ? (
-            <p>No pending requests.</p>
-          ) : (
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Institute</th>
-                  <th>Wallet</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {institutes.map((institute) => (
-                  <tr key={institute._id}>
-                    <td>{institute.instituteName}</td>
-                    <td>
-                      {`${institute.walletAddress.slice(0,6)}...${institute.walletAddress.slice(-4)}`}
-                    </td>
-                    <td>{institute.status}</td>
-                    <td>
-                      <div className="action-buttons">
-                        <button
-                          className="approve-btn"
-                          onClick={() =>
-                            handleApprove(
-                              institute.walletAddress
-                            )
-                          }
-                        >
-                          Approve
-                        </button>
-                        <button
-                          className="reject-btn"
-                          onClick={() =>
-                            handleReject(
-                              institute.walletAddress
-                            )
-                          }
-                        >
-                          Reject
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
-        <div className="table-section">
-          <h2>Approved Institutes</h2>
-          {approvedLoading ? (
-            <p>Loading...</p>
-          ) : approvedInstitutes.length === 0 ? (
-            <p>No approved institutes.</p>
-          ) : (
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Institute</th>
-                  <th>Wallet</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {approvedInstitutes.map((institute) => (
-                  <tr key={institute._id}>
-                    <td>{institute.instituteName}</td>
-                    <td>
-                      {`${institute.walletAddress.slice(0,6)}...${institute.walletAddress.slice(-4)}`}
-                    </td>
-                    <td>Approved</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+        <div className="tables-row">
+          <div className="table-section">
+            <h2>Pending Institute Requests</h2>
+            {loading ? (
+              <p>Loading...</p>
+            ) : institutes.length === 0 ? (
+              <p>No pending requests.</p>
+            ) : (
+              <div className="table-scroll">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Institute</th>
+                      <th>Wallet</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {institutes.map((institute) => (
+                      <tr key={institute._id}>
+                        <td>{institute.instituteName}</td>
+                        <td>
+                          {`${institute.walletAddress.slice(0,6)}...${institute.walletAddress.slice(-4)}`}
+                        </td>
+                        <td>{institute.status}</td>
+                        <td>
+                          <div className="action-buttons">
+                            <button
+                              className="approve-btn"
+                              onClick={() =>
+                                handleApprove(
+                                  institute.walletAddress
+                                )
+                              }
+                            >
+                              Approve
+                            </button>
+                            <button
+                              className="reject-btn"
+                              onClick={() =>
+                                handleReject(
+                                  institute.walletAddress
+                                )
+                              }
+                            >
+                              Reject
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+          <div className="table-section">
+            <h2>Approved Institutes</h2>
+            {approvedLoading ? (
+              <p>Loading...</p>
+            ) : approvedInstitutes.length === 0 ? (
+              <p>No approved institutes.</p>
+            ) : (
+              <div className="table-scroll">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Institute</th>
+                      <th>Wallet</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {approvedInstitutes.map((institute) => (
+                      <tr key={institute._id}>
+                        <td>{institute.instituteName}</td>
+                        <td>
+                          {`${institute.walletAddress.slice(0,6)}...${institute.walletAddress.slice(-4)}`}
+                        </td>
+                        <td>Approved</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

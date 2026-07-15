@@ -261,6 +261,33 @@
   color: var(--secondary-text);
   font-weight: 600;
 }
+.tables-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.tables-row .table-section {
+  flex: 1 1 0;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px var(--shadow);
+  padding: 20px;
+}
+.tables-row .table-section h2 {
+  font-size: 18px;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.table-scroll {
+  overflow-x: auto;
+}
+@media (max-width: 900px) {
+  .tables-row {
+    flex-direction: column;
+  }
+}
 .admin-table {
   width: 100%;
   border-collapse: collapse;
