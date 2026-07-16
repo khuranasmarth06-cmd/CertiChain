@@ -1,5 +1,5 @@
 import ABI from "../abi/AcademicCertificate.json";
 
-export const CONTRACT_ADDRESS = "0x66aF21A9eEb242a6d709c2D581FDE2b68f4469Fb";
+export const CONTRACT_ADDRESS = "0xB716519F3a7A97747A3e326eE93F01b0e5260ab4";
 export { ABI };
 export const abi = ABI;
