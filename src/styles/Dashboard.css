@@ -23,6 +23,11 @@
   align-items: center;
   margin-bottom: 25px;
 }
+.dashboard-top-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 .certificate-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));

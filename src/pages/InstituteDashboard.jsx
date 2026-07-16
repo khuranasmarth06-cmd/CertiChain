@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import Navbar from "../components/Navbar";
 import CertificateTable from "../components/CertificateTable";
 import WalletConnect from "../components/WalletConnect";
+import InstituteStatusBadge from "../components/InstituteStatusBadge";
 import {
   issueCertificate,
   getMyIssuedCertificates,
@@ -19,6 +20,7 @@ function InstituteDashboard() {
     localStorage.getItem("institute")
   );
   const instituteName = institute?.instituteName || "Institute";
+  const instituteStatus = institute?.status || "Pending";
   const [studentAddress, setStudentAddress] = useState("");
   const [studentName, setStudentName] = useState("");
   const [course, setCourse] = useState("");
@@ -86,7 +88,10 @@ function InstituteDashboard() {
           </h2>
           <div className="dashboard-top">
             <h1>Institute Dashboard</h1>
-            <LogoutButton />
+            <div className="dashboard-top-right">
+              <InstituteStatusBadge status={instituteStatus} />
+              <LogoutButton />
+            </div>
           </div>
           <p>
             Issue and manage certificates.

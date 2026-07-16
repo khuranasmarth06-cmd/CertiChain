@@ -6,14 +6,17 @@ import useApprovedInstitutes from "../hooks/useApprovedInstitutes";
 import useCertificateCount from "../hooks/useCertificateCount";
 import { approveInstitute, rejectInstitute } from "../services/adminAuth";
 import { addInstitute } from "../services/contractService";
+import useEnsureWallet from "../hooks/useEnsureWallet";
 import { FaCertificate, FaHourglassHalf, FaUniversity } from "react-icons/fa";
 import "../styles/Dashboard.css";
 function AdminDashboard() {
   const { institutes, loading } = usePendingInstitutes();
   const {institutes: approvedInstitutes,loading: approvedLoading,} = useApprovedInstitutes();
   const { count: certificateCount, loading: certificateLoading } = useCertificateCount();
+  const ensureWalletConnected = useEnsureWallet();
   const handleApprove = async (walletAddress) => {
     try {
+      await ensureWalletConnected();
       const txHash = await addInstitute(walletAddress);
       await approveInstitute(walletAddress);
       alert(
@@ -32,6 +35,7 @@ function AdminDashboard() {
   };
   const handleReject = async (walletAddress) => {
     try {
+      await ensureWalletConnected();
       await rejectInstitute(walletAddress);
       alert("Institute Rejected Successfully.");
       window.location.reload();
