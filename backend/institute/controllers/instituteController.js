@@ -32,6 +32,7 @@ export const signupInstitute = async (req, res) => {
         id: institute._id,
         instituteName:institute.instituteName,
         walletAddress:institute.walletAddress,
+        status: institute.status,
       },
     });
   } catch (error) {
@@ -76,6 +77,7 @@ export const loginInstitute = async (req, res) => {
         id: institute._id,
         instituteName:institute.instituteName,
         walletAddress:institute.walletAddress,
+        status: institute.status,
       },
     });
   } catch (error) {
