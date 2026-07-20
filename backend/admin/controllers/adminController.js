@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import {getPendingInstitutes,approveInstitute,getApprovedInstitutes,rejectInstituteService,} from "../services/adminService.js";
+import {getPendingInstitutes,approveInstitute,getApprovedInstitutes,rejectInstituteService,getRejectedInstitutes,} from "../services/adminService.js";
 dotenv.config();
 export const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
@@ -78,6 +78,20 @@ export const rejectInstitute = async (req, res) => {
 export const fetchApprovedInstitutes = async (req, res) => {
   try {
     const institutes = await getApprovedInstitutes();
+    res.status(200).json({
+      success: true,
+      institutes,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export const fetchRejectedInstitutes = async (req, res) => {
+  try {
+    const institutes = await getRejectedInstitutes();
     res.status(200).json({
       success: true,
       institutes,

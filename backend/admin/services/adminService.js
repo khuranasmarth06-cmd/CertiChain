@@ -20,9 +20,15 @@ export const approveInstitute = async (walletAddress) => {
   return institute;
 };
 export const rejectInstituteService = async (walletAddress) => {
-  const institute = await Institute.findOneAndDelete({
-    walletAddress,
-  });
+  const institute = await Institute.findOneAndUpdate(
+    { walletAddress },
+    {
+      status: "Rejected",
+    },
+    {
+      new: true,
+    }
+  );
   if (!institute) {
     throw new Error("Institute not found");
   }
@@ -31,5 +37,10 @@ export const rejectInstituteService = async (walletAddress) => {
 export const getApprovedInstitutes = async () => {
   return await Institute.find({
     status: "Approved",
+  }).select("-password");
+};
+export const getRejectedInstitutes = async () => {
+  return await Institute.find({
+    status: "Rejected",
   }).select("-password");
 };

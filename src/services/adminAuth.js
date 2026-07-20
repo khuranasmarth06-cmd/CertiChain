@@ -38,3 +38,10 @@ export const getApprovedInstitutes =async () => {
   );
   return response.data;
 };
+export const getRejectedInstitutes = async () => {
+  const response = await API.get(
+    "/admin/rejected-institutes"
+  );
+
+  return response.data.institutes;
+};
