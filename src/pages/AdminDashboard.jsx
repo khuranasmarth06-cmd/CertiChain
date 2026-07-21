@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Navbar from "../components/Navbar";
 import LogoutButton from "../components/LogoutButton";
 import StatCard from "../components/StatCard";
+import Spinner from "../components/Spinner";
 import usePendingInstitutes from "../hooks/usePendingInstitutes";
 import useApprovedInstitutes from "../hooks/useApprovedInstitutes";
 import useRejectedInstitutes from "../hooks/useRejectedInstitutes";
@@ -16,11 +18,9 @@ function AdminDashboard() {
   const {institutes: rejectedInstitutes,loading: rejectedLoading,} = useRejectedInstitutes();
   const { count: certificateCount, loading: certificateLoading } = useCertificateCount();
   const ensureWalletConnected = useEnsureWallet();
-
-  // Approves an institute on-chain + in the DB. Works for both a
-  // pending request and a previously rejected institute, since both
-  // just need to be (re)added to the contract and flipped to "Approved".
+  const [pending, setPending] = useState(null); 
   const handleApprove = async (walletAddress) => {
+    setPending({ wallet: walletAddress, action: "approve" });
     try {
       await ensureWalletConnected();
       const txHash = await addInstitute(walletAddress);
@@ -37,12 +37,12 @@ function AdminDashboard() {
           error.message ||
           "Approval Failed"
       );
+    } finally {
+      setPending(null);
     }
   };
-
-  // Rejects a pending request. No on-chain action needed yet since the
-  // institute was never added to the contract.
   const handleReject = async (walletAddress) => {
+    setPending({ wallet: walletAddress, action: "reject" });
     try {
       await ensureWalletConnected();
       await rejectInstitute(walletAddress);
@@ -55,13 +55,12 @@ function AdminDashboard() {
           error.message ||
           "Reject Failed"
       );
+    } finally {
+      setPending(null);
     }
   };
-
-  // Reverses an approval: removes the institute from the contract, then
-  // flips its DB status back to "Rejected" so it shows up in the
-  // Rejected table (and can be re-approved later).
   const handleRejectApproved = async (walletAddress) => {
+    setPending({ wallet: walletAddress, action: "reject" });
     try {
       await ensureWalletConnected();
       const txHash = await removeInstitute(walletAddress);
@@ -78,6 +77,8 @@ function AdminDashboard() {
           error.message ||
           "Reject Failed"
       );
+    } finally {
+      setPending(null);
     }
   };
 
@@ -122,7 +123,10 @@ function AdminDashboard() {
           <div className="table-section">
             <h2>Pending Institute Requests</h2>
             {loading ? (
-              <p>Loading...</p>
+              <div className="loading-box">
+                <Spinner />
+                <span>Loading...</span>
+              </div>
             ) : institutes.length === 0 ? (
               <p>No pending requests.</p>
             ) : (
@@ -147,24 +151,36 @@ function AdminDashboard() {
                         <td data-label="Action">
                           <div className="action-buttons">
                             <button
-                              className="approve-btn"
+                              className="approve-btn btn-with-spinner"
+                              disabled={pending?.wallet === institute.walletAddress}
                               onClick={() =>
                                 handleApprove(
                                   institute.walletAddress
                                 )
                               }
                             >
-                              Approve
+                              {pending?.wallet === institute.walletAddress &&
+                                pending.action === "approve" && <Spinner />}
+                              {pending?.wallet === institute.walletAddress &&
+                              pending.action === "approve"
+                                ? "Approving..."
+                                : "Approve"}
                             </button>
                             <button
-                              className="reject-btn"
+                              className="reject-btn btn-with-spinner"
+                              disabled={pending?.wallet === institute.walletAddress}
                               onClick={() =>
                                 handleReject(
                                   institute.walletAddress
                                 )
                               }
                             >
-                              Reject
+                              {pending?.wallet === institute.walletAddress &&
+                                pending.action === "reject" && <Spinner />}
+                              {pending?.wallet === institute.walletAddress &&
+                              pending.action === "reject"
+                                ? "Rejecting..."
+                                : "Reject"}
                             </button>
                           </div>
                         </td>
@@ -178,7 +194,10 @@ function AdminDashboard() {
           <div className="table-section">
             <h2>Approved Institutes</h2>
             {approvedLoading ? (
-              <p>Loading...</p>
+              <div className="loading-box">
+                <Spinner />
+                <span>Loading...</span>
+              </div>
             ) : approvedInstitutes.length === 0 ? (
               <p>No approved institutes.</p>
             ) : (
@@ -203,14 +222,20 @@ function AdminDashboard() {
                         <td data-label="Action">
                           <div className="action-buttons">
                             <button
-                              className="reject-btn"
+                              className="reject-btn btn-with-spinner"
+                              disabled={pending?.wallet === institute.walletAddress}
                               onClick={() =>
                                 handleRejectApproved(
                                   institute.walletAddress
                                 )
                               }
                             >
-                              Reject
+                              {pending?.wallet === institute.walletAddress && (
+                                <Spinner />
+                              )}
+                              {pending?.wallet === institute.walletAddress
+                                ? "Rejecting..."
+                                : "Reject"}
                             </button>
                           </div>
                         </td>
@@ -226,7 +251,10 @@ function AdminDashboard() {
           <div className="table-section">
             <h2>Rejected Institutes</h2>
             {rejectedLoading ? (
-              <p>Loading...</p>
+              <div className="loading-box">
+                <Spinner />
+                <span>Loading...</span>
+              </div>
             ) : rejectedInstitutes.length === 0 ? (
               <p>No rejected institutes.</p>
             ) : (
@@ -255,14 +283,20 @@ function AdminDashboard() {
                         <td data-label="Action">
                           <div className="action-buttons">
                             <button
-                              className="approve-btn"
+                              className="approve-btn btn-with-spinner"
+                              disabled={pending?.wallet === institute.walletAddress}
                               onClick={() =>
                                 handleApprove(
                                   institute.walletAddress
                                 )
                               }
                             >
-                              Approve
+                              {pending?.wallet === institute.walletAddress && (
+                                <Spinner />
+                              )}
+                              {pending?.wallet === institute.walletAddress
+                                ? "Approving..."
+                                : "Approve"}
                             </button>
                           </div>
                         </td>

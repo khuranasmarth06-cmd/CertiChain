@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {useAccount,useConnect,useDisconnect,} from "wagmi";
 import Navbar from "../components/Navbar";
 import { loginInstitute } from "../services/instituteAuth";
+import Spinner from "../components/Spinner";
 import "../styles/Auth.css";
 import { useEffect } from "react";
 function InstituteLogin() {
@@ -14,6 +15,7 @@ function InstituteLogin() {
   }
  }, [navigate]);
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
@@ -36,6 +38,7 @@ function InstituteLogin() {
       alert("Please connect MetaMask.");
       return;
     }
+    setSubmitting(true);
     try {
       const response = await loginInstitute({
         walletAddress: address,
@@ -59,6 +62,8 @@ function InstituteLogin() {
         error.response?.data?.message ||
         "Login Failed"
       );
+    } finally {
+      setSubmitting(false);
     }
   };
   return (
@@ -105,8 +110,13 @@ function InstituteLogin() {
               }
               required
             />
-            <button type="submit">
-              Login
+            <button
+              type="submit"
+              disabled={submitting}
+              className="btn-with-spinner"
+            >
+              {submitting && <Spinner />}
+              {submitting ? "Logging in..." : "Login"}
             </button>
           </form>
           <div className="auth-footer">

@@ -4,6 +4,7 @@ import {useAccount,useConnect,useDisconnect,} from "wagmi";
 import Navbar from "../components/Navbar";
 import "../styles/Auth.css";
 import { signupInstitute } from "../services/instituteAuth";
+import Spinner from "../components/Spinner";
 import { useEffect } from "react";
 function InstituteSignup() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ function InstituteSignup() {
   const [instituteName, setInstituteName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
@@ -43,6 +45,7 @@ function InstituteSignup() {
       alert("Passwords do not match.");
       return;
     }
+    setSubmitting(true);
     try {
       const response = await signupInstitute({
         instituteName,
@@ -57,6 +60,8 @@ function InstituteSignup() {
         error.response?.data?.message ||
           "Signup Failed"
       );
+    } finally {
+      setSubmitting(false);
     }
   };
   return (
@@ -121,8 +126,13 @@ function InstituteSignup() {
               }
               required
             />
-            <button type="submit">
-              Create Account
+            <button
+              type="submit"
+              disabled={submitting}
+              className="btn-with-spinner"
+            >
+              {submitting && <Spinner />}
+              {submitting ? "Creating Account..." : "Create Account"}
             </button>
           </form>
           <div className="auth-footer">

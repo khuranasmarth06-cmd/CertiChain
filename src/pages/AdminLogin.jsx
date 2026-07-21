@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { loginAdmin } from "../services/adminAuth";
+import Spinner from "../components/Spinner";
 import "../styles/Auth.css";
 function AdminLogin() {
   const navigate = useNavigate();
@@ -13,8 +14,10 @@ function AdminLogin() {
   }, [navigate]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const handleLogin = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
     try {
       const response = await loginAdmin({
         email,
@@ -35,6 +38,8 @@ function AdminLogin() {
         error.response?.data?.message ||
         "Login Failed"
       );
+    } finally {
+      setSubmitting(false);
     }
   };
   return (
@@ -65,8 +70,13 @@ function AdminLogin() {
               }
               required
             />
-            <button type="submit">
-              Login
+            <button
+              type="submit"
+              disabled={submitting}
+              className="btn-with-spinner"
+            >
+              {submitting && <Spinner />}
+              {submitting ? "Logging in..." : "Login"}
             </button>
           </form>
         </div>

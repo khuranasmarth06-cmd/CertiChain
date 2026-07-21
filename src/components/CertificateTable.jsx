@@ -1,6 +1,9 @@
+import { useState } from "react";
 import StatusBadge from "./StatusBadge";
+import Spinner from "./Spinner";
 import {revokeCertificate,expireCertificate,} from "../services/contractService";
 function CertificateTable({ certificates }) {
+  const [pending, setPending] = useState(null);
   const getStatus = (status) => {
     switch (Number(status)) {
       case 0:
@@ -14,6 +17,7 @@ function CertificateTable({ certificates }) {
     }
   };
   const handleRevoke = async (certificateId) => {
+    setPending({ id: certificateId, action: "revoke" });
     try {
       const txHash = await revokeCertificate(certificateId);
       alert(`Certificate Revoked!\n\n${txHash}`);
@@ -25,9 +29,12 @@ function CertificateTable({ certificates }) {
         error.reason ||
         error.message
       );
+    } finally {
+      setPending(null);
     }
   };
   const handleExpire = async (certificateId) => {
+    setPending({ id: certificateId, action: "expire" });
     try {
       const txHash = await expireCertificate(certificateId);
       alert(`Certificate Expired!\n\n${txHash}`);
@@ -39,6 +46,8 @@ function CertificateTable({ certificates }) {
         error.reason ||
         error.message
       );
+    } finally {
+      setPending(null);
     }
   };
   return (
@@ -69,20 +78,32 @@ function CertificateTable({ certificates }) {
               {Number(cert.status) === 0 && (
                 <>
                   <button
-                    className="revoke-btn"
+                    className="revoke-btn btn-with-spinner"
+                    disabled={pending?.id === Number(cert.id)}
                     onClick={() =>
                       handleRevoke(Number(cert.id))
                     }
                   >
-                    Revoke
+                    {pending?.id === Number(cert.id) &&
+                      pending.action === "revoke" && <Spinner />}
+                    {pending?.id === Number(cert.id) &&
+                    pending.action === "revoke"
+                      ? "Revoking..."
+                      : "Revoke"}
                   </button>
                   <button
-                    className="expire-btn"
+                    className="expire-btn btn-with-spinner"
+                    disabled={pending?.id === Number(cert.id)}
                     onClick={() =>
                       handleExpire(Number(cert.id))
                     }
                   >
-                    Expire
+                    {pending?.id === Number(cert.id) &&
+                      pending.action === "expire" && <Spinner />}
+                    {pending?.id === Number(cert.id) &&
+                    pending.action === "expire"
+                      ? "Expiring..."
+                      : "Expire"}
                   </button>
                 </>
               )}

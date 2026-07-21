@@ -1,7 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { getRejectedInstitutes } from "../services/adminAuth";
-
-// Mirrors useApprovedInstitutes.js
 function useRejectedInstitutes() {
   const [institutes, setInstitutes] = useState([]);
   const [loading, setLoading] = useState(true);

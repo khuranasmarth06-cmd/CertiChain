@@ -14,6 +14,7 @@ import {
 import { useAccount } from "wagmi";
 import "../styles/Dashboard.css";
 import LogoutButton from "../components/LogoutButton";
+import Spinner from "../components/Spinner";
 function InstituteDashboard() {
   const { isConnected } = useAccount();
   const institute = JSON.parse(
@@ -123,13 +124,23 @@ function InstituteDashboard() {
             value={grade}
             onChange={(e) => setGrade(e.target.value)}
           />
-          <button onClick={handleIssueCertificate} disabled={issuing}>
+          <button
+            onClick={handleIssueCertificate}
+            disabled={issuing}
+            className="btn-with-spinner"
+          >
+            {issuing && <Spinner />}
             {issuing ? "Issuing..." : "Issue Certificate"}
           </button>
         </div>
         <div className="table-section">
           <h2>Issued Certificates</h2>
-          {loadingCertificates && <p>Loading certificates...</p>}
+          {loadingCertificates && (
+            <div className="loading-box">
+              <Spinner />
+              <span>Loading certificates...</span>
+            </div>
+          )}
           {!loadingCertificates && (
             <CertificateTable
               certificates={certificates}

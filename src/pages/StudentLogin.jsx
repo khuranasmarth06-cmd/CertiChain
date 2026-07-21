@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { loginStudent } from "../services/studentAuth";
+import Spinner from "../components/Spinner";
 import "../styles/Auth.css";
 function StudentLogin() {
   const navigate = useNavigate();
@@ -13,8 +14,10 @@ function StudentLogin() {
   }, [navigate]);
   const [walletAddress, setWalletAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const handleLogin = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
     try {
       const response = await loginStudent({
         walletAddress,
@@ -39,6 +42,8 @@ function StudentLogin() {
         error.response?.data?.message ||
         "Login Failed"
       );
+    } finally {
+      setSubmitting(false);
     }
   };
   return (
@@ -69,8 +74,13 @@ function StudentLogin() {
               }
               required
             />
-            <button type="submit">
-              Login
+            <button
+              type="submit"
+              disabled={submitting}
+              className="btn-with-spinner"
+            >
+              {submitting && <Spinner />}
+              {submitting ? "Logging in..." : "Login"}
             </button>
           </form>
           <div className="auth-footer">
