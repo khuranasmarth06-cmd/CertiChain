@@ -305,41 +305,9 @@
 .show-more-btn:hover {
   background: var(--primary-tint);
 }
-.mobile-tabs {
-  display: none;
-}
 @media (max-width: 900px) {
   .tables-row {
     flex-direction: column;
-  }
-  .mobile-tabs {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    margin-bottom: 16px;
-    -webkit-overflow-scrolling: touch;
-  }
-  .mobile-tab {
-    flex: 0 0 auto;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--secondary-text);
-    padding: 8px 14px;
-    border-radius: var(--radius-sm);
-    font-weight: 600;
-    font-size: 13px;
-    white-space: nowrap;
-  }
-  .mobile-tab.active {
-    background: var(--primary);
-    color: #1c1305;
-    border-color: var(--primary);
-  }
-  .tables-row .table-section.mobile-hidden {
-    display: none;
-  }
-  .tables-row {
-    margin-top: 0 !important;
   }
 }
 .admin-table {
@@ -394,6 +362,42 @@
 }
 .reject-btn:hover {
   opacity: 0.88;
+}
+
+.mobile-tabs {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .mobile-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mobile-tab {
+    flex: 0 0 auto;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--secondary-text);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .mobile-tab.active {
+    background: var(--primary);
+    color: #1c1305;
+    border-color: var(--primary);
+  }
+  .tables-row .table-section.mobile-hidden {
+    display: none;
+  }
+  .tables-row {
+    margin-top: 0 !important;
+  }
 }
 
 @media (max-width: 600px) {
@@ -468,5 +472,19 @@
     padding: 8px 14px;
     margin-right: 0;
     font-size: 13px;
+  }
+  .stats-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    margin-bottom: 24px;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .stats-grid .stat-card {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+    padding: 16px 18px;
   }
 }
