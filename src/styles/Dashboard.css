@@ -290,6 +290,21 @@
 .table-scroll {
   overflow-x: auto;
 }
+.show-more-btn {
+  display: block;
+  margin: 12px auto 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--primary);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+.show-more-btn:hover {
+  background: var(--primary-tint);
+}
 .mobile-tabs {
   display: none;
 }

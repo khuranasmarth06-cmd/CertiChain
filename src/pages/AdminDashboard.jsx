@@ -20,6 +20,10 @@ function AdminDashboard() {
   const ensureWalletConnected = useEnsureWallet();
   const [pending, setPending] = useState(null);
   const [activeTab, setActiveTab] = useState("pending"); // mobile-only tab switcher
+  const ROW_LIMIT = 5;
+  const [expanded, setExpanded] = useState({ pending: false, approved: false, rejected: false });
+  const toggleExpanded = (key) =>
+    setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
   const handleApprove = async (walletAddress) => {
     setPending({ wallet: walletAddress, action: "approve" });
     try {
@@ -162,7 +166,7 @@ function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {institutes.map((institute) => (
+                    {(expanded.pending ? institutes : institutes.slice(0, ROW_LIMIT)).map((institute) => (
                       <tr key={institute._id}>
                         <td data-label="Institute">{institute.instituteName}</td>
                         <td data-label="Wallet">
@@ -209,6 +213,11 @@ function AdminDashboard() {
                     ))}
                   </tbody>
                 </table>
+                {institutes.length > ROW_LIMIT && (
+                  <button className="show-more-btn" onClick={() => toggleExpanded("pending")}>
+                    {expanded.pending ? "Show less" : `Show all (${institutes.length})`}
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -233,7 +242,7 @@ function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {approvedInstitutes.map((institute) => (
+                    {(expanded.approved ? approvedInstitutes : approvedInstitutes.slice(0, ROW_LIMIT)).map((institute) => (
                       <tr key={institute._id}>
                         <td data-label="Institute">{institute.instituteName}</td>
                         <td data-label="Wallet">
@@ -264,6 +273,11 @@ function AdminDashboard() {
                     ))}
                   </tbody>
                 </table>
+                {approvedInstitutes.length > ROW_LIMIT && (
+                  <button className="show-more-btn" onClick={() => toggleExpanded("approved")}>
+                    {expanded.approved ? "Show less" : `Show all (${approvedInstitutes.length})`}
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -290,7 +304,7 @@ function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {rejectedInstitutes.map((institute) => (
+                    {(expanded.rejected ? rejectedInstitutes : rejectedInstitutes.slice(0, ROW_LIMIT)).map((institute) => (
                       <tr key={institute._id}>
                         <td data-label="Institute">{institute.instituteName}</td>
                         <td data-label="Wallet">
@@ -325,6 +339,11 @@ function AdminDashboard() {
                     ))}
                   </tbody>
                 </table>
+                {rejectedInstitutes.length > ROW_LIMIT && (
+                  <button className="show-more-btn" onClick={() => toggleExpanded("rejected")}>
+                    {expanded.rejected ? "Show less" : `Show all (${rejectedInstitutes.length})`}
+                  </button>
+                )}
               </div>
             )}
           </div>
