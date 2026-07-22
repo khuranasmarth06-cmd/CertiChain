@@ -53,7 +53,7 @@ function Developer() {
               Admin Message
             </h3>
             <p>
-              Thank you for visiting CertChain.
+              Thank you for visiting CertiChain.
               <br /><br />
               This project was developed to
               demonstrate how blockchain

@@ -86,6 +86,19 @@ Add these files with the required variables:
 - `backend/.env`
 - `blockchain/.env`
 
+### `backend/.env`
+```
+MONGO_URI=<your MongoDB connection string, e.g. mongodb://localhost:27017/certichain>
+JWT_SECRET=<random secret string used to sign auth tokens>
+ADMIN_EMAIL=<email used to log into the admin dashboard>
+ADMIN_PASSWORD=<password used to log into the admin dashboard>
+PORT=<port the backend server listens on, e.g. 5000>
+```
+- `MONGO_URI` — connection string for your MongoDB instance (local or Atlas).
+- `JWT_SECRET` — used to sign and verify JSON Web Tokens for authentication.
+- `ADMIN_EMAIL` / `ADMIN_PASSWORD` — credentials for the seeded/hardcoded admin account.
+- `PORT` — port number the Express server runs on.
+
 ## Hardhat Setup (Blockchain)
 
 ### 1. `.env` file — `blockchain/.env`
@@ -114,6 +127,13 @@ npx hardhat verify --network sepolia <deployed_contract_address> <owner_address>
 ```
 
 ---
+
+## Future Improvements
+
+- **OCR-based certificate data extraction** — instead of manually typing certificate fields (student name, course, grade, date, etc.), use OCR (e.g. Tesseract.js, Google Vision API, or AWS Textract) to auto-read and pre-fill fields directly from an uploaded PDF/scanned certificate. Admin/institute would just verify and confirm rather than type everything.
+- **Automated KYC-style institute verification** — institutes upload registration/accreditation documents at signup, and the platform auto-verifies them (via a document-verification API, or rule-based checks like matching registration number, government ID format, or domain/email verification) to auto-approve or auto-reject, removing manual admin review for the common cases. Manual review would remain as a fallback for edge cases or documents that fail automated checks.
+- **Improved Role-based access control** — support multiple admin roles (e.g. super-admin vs reviewer) with different permission levels, instead of a single hardcoded admin account.
+- **Certificate revocation reason & appeal flow** — let admin attach a reason when revoking/rejecting, and let institutes respond or re-submit corrected documents.
 
 ## How to Run
 
