@@ -33,7 +33,7 @@ Pick the section below that matches you.
 
 You don't need to log in to check if a certificate is genuine.
 
-1. Click/tap **"Verify a certificate"** on the home page, or go to the **Verify** page from the menu.
+1. Click/tap **"Verify"** on the home page, or go to the **Verify** page from the menu.
 2. Enter the **Token ID** (the certificate's unique number, usually given to you by the certificate holder or found on the certificate/QR code).
 3. Tap **Verify**.
 4. The result will show:
@@ -139,11 +139,6 @@ Institutes also need MetaMask connected before signing up (see Section 4) — th
 ## 7. Companies / Employers: Checking a Candidate's Certificate
 
 You do **not** need an account to verify a certificate — just use the **Verify** page as described in Section 3.
-
-If you'd like a saved account to keep a history of checks, you can:
-1. Go to **Company → Sign Up**, fill in your details.
-2. Go to **Company → Login** to sign in going forward.
-
 ---
 
 ## 8. Using it on Mobile vs Desktop
