@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import { FaShieldAlt, FaLink, FaQrcode, FaBolt, FaUniversity, FaCube, FaUserGraduate, FaCheckCircle } from "react-icons/fa";
+import { FaShieldAlt, FaLink, FaQrcode, FaBolt, FaUniversity, FaCube, FaUserGraduate, FaCheckCircle, FaBook } from "react-icons/fa";
 import "../styles/Platform.css";
 
 function Platform() {
@@ -69,6 +69,23 @@ function Platform() {
               <p>An ID, wallet address or QR scan confirms it in seconds.</p>
             </div>
           </div>
+        </section>
+
+        <section className="guide-cta">
+          <h2>Need a walkthrough?</h2>
+          <p className="guide-cta-subtitle">
+            Step-by-step instructions for institutes, students, and admins — issuing,
+            claiming, and verifying certificates.
+          </p>
+          <a
+            href="https://github.com/khuranasmarth06-cmd/CertiChain/blob/main/Userguid.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-seal"
+          >
+            <FaBook style={{ marginRight: "8px" }} />
+            Read the User Guide
+          </a>
         </section>
       </div>
     </>

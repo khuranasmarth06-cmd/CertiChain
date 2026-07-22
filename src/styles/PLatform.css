@@ -233,3 +233,26 @@
     grid-template-columns: 1fr;
   }
 }
+
+.guide-cta {
+  padding: 70px 0 40px;
+  text-align: center;
+}
+
+.guide-cta h2 {
+  font-size: 32px;
+  color: var(--text);
+  margin-bottom: 15px;
+}
+
+.guide-cta-subtitle {
+  max-width: 600px;
+  margin: 0 auto 28px;
+  color: var(--secondary-text);
+  line-height: 1.7;
+}
+
+.guide-cta .btn-seal {
+  display: inline-flex;
+  align-items: center;
+}
