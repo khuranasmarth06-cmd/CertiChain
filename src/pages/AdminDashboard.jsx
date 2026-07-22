@@ -18,7 +18,8 @@ function AdminDashboard() {
   const {institutes: rejectedInstitutes,loading: rejectedLoading,} = useRejectedInstitutes();
   const { count: certificateCount, loading: certificateLoading } = useCertificateCount();
   const ensureWalletConnected = useEnsureWallet();
-  const [pending, setPending] = useState(null); 
+  const [pending, setPending] = useState(null);
+  const [activeTab, setActiveTab] = useState("pending"); // mobile-only tab switcher
   const handleApprove = async (walletAddress) => {
     setPending({ wallet: walletAddress, action: "approve" });
     try {
@@ -119,8 +120,28 @@ function AdminDashboard() {
             variant="success"
           />
         </div>
+        <div className="mobile-tabs">
+          <button
+            className={activeTab === "pending" ? "mobile-tab active" : "mobile-tab"}
+            onClick={() => setActiveTab("pending")}
+          >
+            Pending ({institutes.length})
+          </button>
+          <button
+            className={activeTab === "approved" ? "mobile-tab active" : "mobile-tab"}
+            onClick={() => setActiveTab("approved")}
+          >
+            Approved ({approvedInstitutes.length})
+          </button>
+          <button
+            className={activeTab === "rejected" ? "mobile-tab active" : "mobile-tab"}
+            onClick={() => setActiveTab("rejected")}
+          >
+            Rejected ({rejectedInstitutes.length})
+          </button>
+        </div>
         <div className="tables-row">
-          <div className="table-section">
+          <div className={`table-section ${activeTab !== "pending" ? "mobile-hidden" : ""}`}>
             <h2>Pending Institute Requests</h2>
             {loading ? (
               <div className="loading-box">
@@ -191,7 +212,7 @@ function AdminDashboard() {
               </div>
             )}
           </div>
-          <div className="table-section">
+          <div className={`table-section ${activeTab !== "approved" ? "mobile-hidden" : ""}`}>
             <h2>Approved Institutes</h2>
             {approvedLoading ? (
               <div className="loading-box">
@@ -248,7 +269,7 @@ function AdminDashboard() {
           </div>
         </div>
         <div className="tables-row" style={{ marginTop: "24px" }}>
-          <div className="table-section">
+          <div className={`table-section ${activeTab !== "rejected" ? "mobile-hidden" : ""}`}>
             <h2>Rejected Institutes</h2>
             {rejectedLoading ? (
               <div className="loading-box">

@@ -290,9 +290,41 @@
 .table-scroll {
   overflow-x: auto;
 }
+.mobile-tabs {
+  display: none;
+}
 @media (max-width: 900px) {
   .tables-row {
     flex-direction: column;
+  }
+  .mobile-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mobile-tab {
+    flex: 0 0 auto;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--secondary-text);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .mobile-tab.active {
+    background: var(--primary);
+    color: #1c1305;
+    border-color: var(--primary);
+  }
+  .tables-row .table-section.mobile-hidden {
+    display: none;
+  }
+  .tables-row {
+    margin-top: 0 !important;
   }
 }
 .admin-table {
@@ -361,8 +393,6 @@
     overflow-x: visible;
     max-width: 100%;
   }
-
-  /* Stack tables into cards instead of horizontal-scrolling them */
   .admin-table,
   .certificate-table {
     min-width: 0;
