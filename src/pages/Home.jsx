@@ -61,7 +61,7 @@ function Home() {
                 <line x1="90" y1="90" x2="260" y2="90" stroke="var(--hairline)" strokeWidth="1" />
 
                 <text x="175" y="120" textAnchor="middle" fontFamily="var(--font-body)" fontSize="10" fill="var(--secondary-text)">AWARDED TO</text>
-                <text x="175" y="142" textAnchor="middle" fontFamily="var(--font-display)" fontSize="19" fill="var(--text)">A. Okafor</text>
+                <text x="175" y="142" textAnchor="middle" fontFamily="var(--font-display)" fontSize="19" fill="var(--text)">Smarth Khurana</text>
 
                 <text x="175" y="168" textAnchor="middle" fontFamily="var(--font-body)" fontSize="11" fill="var(--secondary-text)">Distributed Systems — Grade A</text>
 
