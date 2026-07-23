@@ -1,4 +1,4 @@
 import ABI from "../abi/AcademicCertificate.json";
-export const CONTRACT_ADDRESS = "0xf9c551D06C532A101814E02105135b84cfD9D9f6";
+export const CONTRACT_ADDRESS = "0xBd6592dD37C4c4FdE908624242eF206f556483c0";
 export { ABI };
 export const abi = ABI;

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import StatusBadge from "../components/StatusBadge";
 import {getCertificate,isValidCertificate,getCertificateStatus,} from "../services/contractService";
+import useCertificateIssuer from "../hooks/useCertificateIssuer";
 import "../styles/Verify.css";
 import { QRCodeCanvas } from "qrcode.react";
 import { useSearchParams } from "react-router-dom";
@@ -11,6 +12,9 @@ function Verify() {
   const [notFound, setNotFound] = useState(false);
   const [checking, setChecking] = useState(false);
   const [searchParams] = useSearchParams();
+  const { instituteName, loading: loadingIssuer } = useCertificateIssuer(
+    certificate?.id
+  );
   useEffect(() => {
     const id = searchParams.get("tokenId");
     if (id) {
@@ -83,6 +87,12 @@ function Verify() {
             </p>
             <p>
               <strong>Certificate ID:</strong> {certificate.id}
+            </p>
+            <p>
+              <strong>Issued By:</strong>{" "}
+              {loadingIssuer
+                ? "Looking up institute..."
+                : instituteName || "Unknown Institute"}
             </p>
             <p>
               <strong>Issued At:</strong>{" "}

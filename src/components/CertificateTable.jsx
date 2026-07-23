@@ -2,7 +2,7 @@ import { useState } from "react";
 import StatusBadge from "./StatusBadge";
 import Spinner from "./Spinner";
 import {revokeCertificate,expireCertificate,} from "../services/contractService";
-function CertificateTable({ certificates }) {
+function CertificateTable({ certificates, instituteName }) {
   const [pending, setPending] = useState(null);
   const getStatus = (status) => {
     switch (Number(status)) {
@@ -58,6 +58,7 @@ function CertificateTable({ certificates }) {
           <th>Student</th>
           <th>Course</th>
           <th>Grade</th>
+          <th>Issued By</th>
           <th>Status</th>
           <th>Action</th>
         </tr>
@@ -69,6 +70,7 @@ function CertificateTable({ certificates }) {
             <td>{cert.studentName}</td>
             <td>{cert.course}</td>
             <td>{cert.grade}</td>
+            <td>{instituteName || "-"}</td>
             <td>
               <StatusBadge
                 status={getStatus(cert.status)}

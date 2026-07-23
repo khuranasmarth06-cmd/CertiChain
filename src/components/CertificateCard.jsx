@@ -1,7 +1,11 @@
 import StatusBadge from "./StatusBadge";
 import { QRCodeCanvas } from "qrcode.react";
-function CertificateCard({ certificate }) {
+import useCertificateIssuer from "../hooks/useCertificateIssuer";
+function CertificateCard({ certificate, issuedBy }) {
   const certificateId = Number(certificate.id);
+  const { instituteName: resolvedIssuer, loading: loadingIssuer } =
+    useCertificateIssuer(issuedBy ? undefined : certificateId);
+  const issuerName = issuedBy || resolvedIssuer;
 const baseUrl = import.meta.env.VITE_FRONTEND_URL.replace(/\/$/, "");
 const verificationUrl =`${baseUrl}/#/verify?certificateId=${certificateId}`;
   console.log(verificationUrl);
@@ -54,6 +58,14 @@ const verificationUrl =`${baseUrl}/#/verify?certificateId=${certificateId}`;
         <p>
           <strong>Certificate ID:</strong>{" "}
           {certificateId}
+        </p>
+        <p>
+          <strong>Issued By:</strong>{" "}
+          {issuedBy
+            ? issuerName
+            : loadingIssuer
+            ? "Looking up institute..."
+            : issuerName || "Unknown Institute"}
         </p>
         <p>
           <strong>Issued On:</strong>{" "}

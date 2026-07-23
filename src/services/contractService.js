@@ -96,6 +96,29 @@ export async function getCertificatesByInstitute(instituteAddress) {
   assertAddress(instituteAddress, "Institute address");
   return read("getCertificatesByInstitute", [instituteAddress]);
 }
+export async function findIssuingInstitute(certificateId, institutes = []) {
+  const targetId = BigInt(certificateId);
+  for (const institute of institutes) {
+    if (!institute?.walletAddress || !isAddress(institute.walletAddress)) {
+      continue;
+    }
+    try {
+      const ids = await getCertificatesByInstitute(institute.walletAddress);
+      if (ids.some((id) => BigInt(id) === targetId)) {
+        return {
+          instituteName: institute.instituteName,
+          walletAddress: institute.walletAddress,
+        };
+      }
+    } catch (error) {
+      console.error(
+        `Failed to check institute ${institute.walletAddress}`,
+        error
+      );
+    }
+  }
+  return null;
+}
 export async function getMyIssuedCertificates() {
   const { address } = getAccount(config);
   if (!address) return [];

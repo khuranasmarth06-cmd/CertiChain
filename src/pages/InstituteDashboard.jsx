@@ -145,6 +145,7 @@ function InstituteDashboard() {
             <CertificateTable
               certificates={certificates}
               onChanged={loadCertificates}
+              instituteName={instituteName}
             />
           )}
         </div>
