@@ -171,7 +171,6 @@
 
 .certificate-card:hover {
   border-color: var(--primary);
-  box-shadow: 0 10px 24px var(--shadow);
 }
 
 .certificate-header {
@@ -247,7 +246,6 @@
 }
 
 .portal-card:hover {
-  transform: translateY(-6px);
   border-color: var(--primary);
 }
 
